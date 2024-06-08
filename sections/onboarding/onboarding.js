@@ -7,21 +7,27 @@ import Image from 'next/image';
 import clsx from 'clsx';
 import Arrowdown from '@/public/icons/arrowdown';
 import { motion } from 'framer-motion';
+import { toast, useToast } from '@/components/ui/use-toast';
 const Onboarding = () => {
     const [showOptions, setShowOptions] = useState(false);
     const [showOptions1, setShowOptions1] = useState(false);
     const [showOptions2, setShowOptions2] = useState(false);
     const [showOptions3, setShowOptions3] = useState(false);
+    const [showOptions4, setShowOptions4] = useState(false);
+    const { toast } = useToast()
     const [loading, setloading] = useState(false);
     const [pageLoad, setPageLoad] = useState(false);
     const [drinkingHabits, setDrinkingHabits] = useState();
     const [exercise, setExercise] = useState();
     const [eatingSchedule, setEatingSchedule] = useState();
     const [dietPreference, setDietPreference] = useState();
+    const [smokingHabits, setSmokingHabits] = useState();
+    const smokingHabitsOptions = ["Non-Smoker", "Occasional Smoker", "Regular Smoker"];
+
     const drinkingHabitsOptions = ["None", "Occasional", "Regular"];
     const exerciseOptions = ["None", "Occasional", "Regular"];
     const eatingScheduleOptions = ["3 meals a day", "2 meals a day", "Intermittent Fasting"];
-    const dietPreferenceOptions = ["Vegan", "Vegetarian", "Non-Vegetarian", "Keto", "Paleo"];
+    const dietPreferenceOptions = ["Vegan", "Vegetarian", "Non-Vegetarian"];
     if (pageLoad) {
         return (
             <div className="h-[100vh] flex justify-center items-center">
@@ -29,22 +35,58 @@ const Onboarding = () => {
             </div>
         );
     }
+    const submit = () => {
+        setloading(true)
+        if (!drinkingHabits) {
+            toast({
+                title: "Please choose drinking habits"
+            });
+        } else if (!exercise) {
+            toast({
+                title: "Please choose exercise level"
+            });
+        } else if (!eatingSchedule) {
+            toast({
+                title: "Please choose eating schedule"
+            });
+        } else if (!dietPreference) {
+            toast({
+                title: "Please choose diet preference"
+            });
+        } else if (!smokingHabits) {
+            toast({
+                title: "Please choose smoking habits"
+            });
+        } else {
+            console.log({
+                drinkingHabits,
+                exercise,
+                eatingSchedule,
+                dietPreference,
+                smokingHabits
+            });
+            toast({
+                title: "Preferences submitted successfully!"
+            });
+        }
+        setloading(false)
+    }
     return (
-        <div className=" grid grid-cols-1 justify-center lg:grid-cols-3  relative  min-h-[100vh] md:max-h-[100vh]  gap-[3rem] overflow-hidden">
+        <div className=" grid grid-cols-1 justify-center lg:grid-cols-5  relative  min-h-[100vh] md:max-h-[100vh]  gap-[3rem] overflow-hidden">
 
             <div className=" absolute hidden lg:flex left-[1rem] md:left-[2rem] lg:left-[2rem] top-[2rem]  z-20">
                 <Link href={"/"}>
                     <Logo />
                 </Link>
             </div>
-            <div className=" h-full hidden bg-[#F5F5F5] lg:block grid-cols-1  w-full">
+            <div className=" h-full hidden bg-[#F5F5F5] lg:block grid-cols-1 col-span-2  w-full">
 
                 <Image
                     className=" h-full w-[70%] object-contain mx-auto "
                     src={People1}
                 />
             </div>
-            <div className=' col-span-2  flex flex-col   justify-center'>
+            <div className=' col-span-3  flex flex-col   justify-center'>
                 <div className=' flex pb-[3rem] justify-center'><svg width="644" height="30" viewBox="0 0 644 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="30" height="30" rx="15" fill="black" />
                     <path d="M14.82 21V12.21C14.17 12.81 13.34 13.2 12.33 13.38V12.165C13.41 11.935 14.31 11.38 15.03 10.5H16.11V21H14.82Z" fill="white" />
@@ -97,7 +139,7 @@ const Onboarding = () => {
                                 }}
                                 id=""
                                 className={clsx(
-                                    "  overflow-hidden   z-20 absolute w-full  bg-white my-2 "
+                                    "  overflow-hidden rounded-xl  z-20 absolute w-full  bg-white my-2 "
                                 )}
                             >
                                 <div
@@ -155,7 +197,7 @@ const Onboarding = () => {
                                 }}
                                 id=""
                                 className={clsx(
-                                    "  overflow-hidden  z-20  absolute w-full  bg-white my-2 "
+                                    "  overflow-hidden rounded-xl  z-20  absolute w-full  bg-white my-2 "
                                 )}
                             >
                                 <div
@@ -212,7 +254,7 @@ const Onboarding = () => {
                                 }}
                                 id=""
                                 className={clsx(
-                                    "  overflow-hidden  z-20  absolute w-full  bg-white my-2 "
+                                    "  overflow-hidden rounded-xl z-20  absolute w-full  bg-white my-2 "
                                 )}
                             >
                                 <div
@@ -242,7 +284,7 @@ const Onboarding = () => {
                             <div
                                 style={{ ease: [0.43, 0.13, 0.23, 0.96] }}
                                 className={clsx(
-                                    showOptions ? "rotate-180" : "rotate-0",
+                                    showOptions3 ? "rotate-180" : "rotate-0",
                                     " transition-all absolute top-[50%] -translate-y-[50%]  right-3   duration-500"
                                 )}
                             >
@@ -270,7 +312,7 @@ const Onboarding = () => {
                                 }}
                                 id=""
                                 className={clsx(
-                                    "  overflow-hidden z-20   absolute w-full  bg-white my-2 "
+                                    "  overflow-hidden z-20  rounded-xl  absolute w-full  bg-white my-2 "
                                 )}
                             >
                                 <div
@@ -292,9 +334,67 @@ const Onboarding = () => {
                             </motion.div>
                         </div>
                     </div>
+                    <div className=" flex flex-col gap-2">
+                        <div className="  font-circular font-medium tracking-wide text-[0.85rem]">
+                            Smoking Habit
+                        </div>
+                        <div onClick={() => { setShowOptions4(!showOptions4) }} className=" w-full relative">
+                            <div
+                                style={{ ease: [0.43, 0.13, 0.23, 0.96] }}
+                                className={clsx(
+                                    showOptions4 ? "rotate-180" : "rotate-0",
+                                    " transition-all absolute top-[50%] -translate-y-[50%]  right-3   duration-500"
+                                )}
+                            >
+                                <Arrowdown color={"#292D32"} />
+                            </div>
+
+                            <input
+
+                                readOnly
+                                value={smokingHabits}
+                                className=" outline-none cursor-pointer focus:border-[#205FFF] bg-[#FAFBFC] w-[100%]   px-4 py-3.5 border-[#EDEEF4] border-[1px]  text-[.9rem]   font-circular  rounded-lg"
+                                placeholder="Select Your Smoking habit"
+                                type="text"
+                            />
+                            <motion.div
+                                initial={{
+                                    height: 0,
+                                }}
+                                animate={{
+                                    height: showOptions4 ? "auto" : 0,
+                                }}
+                                transition={{
+                                    duration: 0.3,
+                                    ease: [0.43, 0.13, 0.23, 0.96],
+                                }}
+                                id=""
+                                className={clsx(
+                                    "  overflow-hidden z-20 rounded-xl  absolute w-full  bg-white my-2 "
+                                )}
+                            >
+                                <div
+                                    id="nested-content1"
+                                    className=" border-[1px] grid gap-1 border-[#EDEEF4] rounded-xl overflow-scroll"
+                                >
+                                    {smokingHabitsOptions?.map((value) => (
+                                        <div
+                                            onClick={() => {
+                                                setSmokingHabits(value);
+                                                setShowOptions4(false);
+                                            }}
+                                            className="   hover:cursor-pointer px-3 text-[#000000]  py-3 duration-300  font-circular font-medium tracking-wide w-full h85er:text-[#8f8f8f] hover:bg-[#EDEDED]       h-max   leading-none"
+                                        >
+                                            {value}
+                                        </div>
+                                    ))}
+                                </div>
+                            </motion.div>
+                        </div>
+                    </div>
                     <div
                         className=" text-[0.9rem] col-span-2 bg-[#205FFF] w-full  font-circular cursor-pointer justify-center mt-5 text-white   font-medium py-4 rounded-full flex gap-3 items-center min-h-[60px]"
-                    // onClick={submit}
+                        onClick={submit}
                     >
                         <div className={clsx("", loading ? "hidden" : "")}>Continue</div>
                         <div className={clsx("", loading ? "" : "hidden")}>

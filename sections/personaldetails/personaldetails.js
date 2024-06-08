@@ -140,7 +140,7 @@ const Personaldetails = () => {
         }
     };
     return (
-        <div onClick={() => { setfocus(null) }} className=" grid grid-cols-1 justify-center lg:grid-cols-3  relative  min-h-[100vh] md:max-h-[100vh]  gap-[3rem] overflow-hidden">
+        <div onClick={() => { setfocus(null) }} className=" grid grid-cols-1 justify-center lg:grid-cols-5  relative  min-h-[100vh] md:max-h-[100vh]  gap-[3rem] overflow-hidden">
             <div className={clsx("    absolute  top-0 z-[100]")}>
                 <div
                     className={clsx(
@@ -176,14 +176,14 @@ const Personaldetails = () => {
                     <Logo />
                 </Link>
             </div>
-            <div className=" h-full hidden bg-[#F5F5F5] lg:block grid-cols-1  w-full">
+            <div className=" h-full hidden bg-[#F5F5F5] lg:block grid-cols-1 col-span-2  w-full">
 
                 <Image
                     className=" h-full w-[70%] object-contain mx-auto "
                     src={People1}
                 />
             </div>
-            <div className=' col-span-2 py-[5rem]'>
+            <div className=' col-span-3 py-[5rem]'>
                 <div className=' flex justify-center'><svg width="524" height="30" viewBox="0 0 524 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="30" height="30" rx="15" fill="black" />
                     <path d="M14.82 21V12.21C14.17 12.81 13.34 13.2 12.33 13.38V12.165C13.41 11.935 14.31 11.38 15.03 10.5H16.11V21H14.82Z" fill="white" />
