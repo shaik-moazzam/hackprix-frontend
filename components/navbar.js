@@ -31,7 +31,7 @@ const Navbar = () => {
     }, []);
     return (
         <div className={clsx(' py-[1rem]  sticky top-0 z-[200]', isScrolling
-            ? " translate-y-[-100%]  transition-all duration-1000  ease-in-out"
+            ? " translate-y-[-101%]  transition-all duration-1000  ease-in-out"
             : "  translate-y-0 transition-all duration-1000 ease-in-out", params.includes("usecase1") ? " bg-[#1D55E5]" : params.includes("usecase2") ? "bg-[#EDF1F4]" : params.includes("usecase3") ? " bg-[#163300]" : "")}>
             <Padding className={""}>
                 <div className=' flex justify-between items-center'>
