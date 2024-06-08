@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
       <body>
         <Lenis1>
           <UserProvider>
-            <Navbar />
+            {/* <Navbar /> */}
             {children}
             <Footer />
           </UserProvider>
