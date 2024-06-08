@@ -37,7 +37,7 @@ const Scrollable = () => {
         className=" flex gap-10 px-[1rem] py-20 md:px-[3rem] overflow-x-scroll w-full "
       >
         <Image
-          draggable={false}
+          // draggable={false}
           className="  rounded-2xl w-[25rem] "
           src={People1}
         />
