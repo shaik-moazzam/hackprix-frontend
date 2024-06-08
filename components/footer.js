@@ -1,10 +1,19 @@
+"use client";
 import React from "react";
 import Padding from "./padding";
 import Healtyme from "@/public/icons/healtyme";
+import clsx from "clsx";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
+  const pathname = usePathname();
   return (
-    <div className=" bg-[#163300] text-white font-circular ">
+    <div
+      className={clsx(
+        " bg-[#163300] text-white font-circular ",
+        pathname.includes("dashboard") ? " hidden " : ""
+      )}
+    >
       <Padding className={" py-20 flex  "}>
         <div className=" w-[40%]  font-circular ">
           <div className=" text-[#9FE870] text-[1.1rem] ">Healthyme</div>

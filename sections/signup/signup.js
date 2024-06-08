@@ -77,7 +77,7 @@ const Signup = () => {
       let user;
       try {
         setloading(true);
-        user = await Register(email, password);
+        user = await Register(email, password, name);
 
         if (user.error) {
           const error = user.error;
@@ -107,7 +107,7 @@ const Signup = () => {
           }
         } else {
           dispatch({ type: "SET_USER", payload: user });
-          router("/dashboard");
+          // router("/dashboard");
         }
       } catch (error) {
       } finally {
@@ -133,14 +133,6 @@ const Signup = () => {
 
   return (
     <div className=" grid grid-cols-1 relative justify-center lg:grid-cols-3   min-h-[100vh] gap-[3rem] overflow-hidden">
-      <div className=" absolute left-[1rem] md:left-[2rem] lg:left-[2rem] top-[2rem]  hidden lg:flex z-20">
-        <Link
-          className=" font-thunder tracking-wider font-medium text-[2rem] "
-          href={"/"}
-        >
-          HOME
-        </Link>
-      </div>
       <div className=" h-full hidden bg-[#F5F5F5] lg:block grid-cols-1  w-full">
         <Image
           className=" h-full w-[70%] object-contain mx-auto "
@@ -148,9 +140,13 @@ const Signup = () => {
         />
       </div>
       <div className=" h-full col-span-2 flex justify-center lg:block  bg-[#f9fafb] lg:bg-white  w-full items-center">
-        <div className={"py-10  px-[1rem] md:px-[2rem] w-full lg:px-0 "}>
-          <div className=" w-full   relative  bg-whit   border-[#dadcdd]  rounded-3xl px-[1rem] md:px-[2rem]    z-10">
-            <div className="  pt-[3rem] lg:pt-0 pb-[2rem] md:pb-[5rem] text-[#252525] font-circular text-center flex gap-5 w-max mx-auto text-[1rem] ">
+        <div
+          className={
+            "py-10  px-[1rem] md:px-[2rem] w-full max-w-[640px] mx-auto "
+          }
+        >
+          <div className=" w-full   relative  bg-white   border-[#dadcdd]  rounded-3xl px-[1rem] md:px-[2rem]    z-10">
+            <div className="  pt-[3rem] lg:pt-0 pb-[2rem] md:pb-[5rem] text-[#252525] font-circular text-center flex gap-5 w-max mx-auto text-[0.95rem] ">
               <div className=" flex items-center gap-4 ">
                 <div className=" bg-black text-white h-[2.5rem] p-4 text-center flex justify-center items-center rounded-full w-[2.5rem]">
                   1
@@ -172,15 +168,8 @@ const Signup = () => {
                 <div>Onboarding</div>
                 <Arrowright />
               </div>
-              <div className=" flex items-center gap-4 text-[#646D78] ">
-                <div className="  border-[#646D78] border h-[2.5rem] p-4 text-center flex justify-center items-center rounded-full w-[2.5rem]">
-                  4
-                </div>
-                <div>Initial Data</div>
-                <Arrowright />
-              </div>
             </div>
-            <div className=" w-[60%] mx-auto ">
+            <div className=" w-full mx-auto ">
               <Link href={`${BASE_URL}student/auth/google`}>
                 <div className=" bg-white w-full justify-center border-[1px] font-circular font-[500] border-[#E5E7EB] py-4  rounded-[10rem] flex gap-3 items-center ">
                   <Google g={true} /> Sign Up with google
@@ -260,7 +249,7 @@ const Signup = () => {
               </div>
 
               <div
-                className=" text-[0.9rem] bg-[#205FFF] w-full cursor-pointer justify-center mt-5 text-white  font-Matter font-medium py-4 rounded-full flex gap-3 items-center min-h-[60px]"
+                className=" text-[0.9rem] bg-[#205FFF] w-full cursor-pointer justify-center mt-5 text-white font-circular font-medium py-4 rounded-full flex gap-3 items-center min-h-[60px]"
                 onClick={handleSignup}
               >
                 <div className={clsx("", loading ? "hidden" : "")}>
@@ -270,7 +259,7 @@ const Signup = () => {
                   <div class="loader-line"></div>
                 </div>
               </div>
-              <div className=" text-[0.9rem] text-[#858585] font-Matter flex py-6  pb-[3rem] lg:pb-10 justify-center gap-2">
+              <div className=" text-[0.9rem] text-[#858585] font-circular flex py-6  pb-[3rem] lg:pb-10 justify-center gap-2">
                 Already have an account?
                 <div className=" font-medium cursor-pointer text-[#205FFF]">
                   <Link href={"/login"}>Login</Link>
