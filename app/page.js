@@ -1,6 +1,7 @@
 import Connect from "@/sections/home/connect";
 import Hero from "@/sections/home/hero";
 import People from "@/sections/home/people";
+import Save from "@/sections/home/save";
 import React from "react";
 
 const Page = () => {
@@ -9,6 +10,7 @@ const Page = () => {
       <Hero />
       <People />
       <Connect />
+      <Save />
     </div>
   );
 };
