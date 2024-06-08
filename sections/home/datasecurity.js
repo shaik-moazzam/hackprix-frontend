@@ -60,7 +60,7 @@ const Datasecurity = () => {
             />
           </div>
         </div>
-        <div>
+        <div className=" py-20">
           <div className=" text-[3rem] md:text-[7rem] md:leading-[7rem] mx-auto text-center    font-thunder font-bold  md:max-w-[700px] ">
             YOUR HEALTH WILL LOVE IT
           </div>

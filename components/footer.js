@@ -1,40 +1,41 @@
 import React from "react";
 import Padding from "./padding";
+import Healtyme from "@/public/icons/healtyme";
 
 const Footer = () => {
   return (
-    <div>
-      <Padding>
-        <div>
-          <div>Healthyme</div>
-          <div>
+    <div className=" bg-[#163300] text-white font-circular ">
+      <Padding className={" py-20 flex  "}>
+        <div className=" w-[40%]  font-circular ">
+          <div className=" text-[#9FE870] text-[1.1rem] ">Healthyme</div>
+          <div className=" md:max-w-[320px] font-normal pt-1 text-white">
             Elevate your established trademark with our expert design services –
             Redefine, Refresh, and Captivate
           </div>
-          <div>©2024 healthyme.</div>
+          <div className=" text-white pt-20 ">©2024 healthyme.</div>
         </div>
-        <div>
-          <div>
-            <div>
-              <div>Links</div>
+        <div className=" w-[50%] ">
+          <div className=" grid  md:flex justify-between ">
+            <div className=" grid gap-3 ">
+              <div className="text-[#9FE870] text-[1.1rem] pb-2">Links</div>
               <div>Home</div>
               <div>Search Trademark</div>
               <div>Blogs</div>
               <div>FAQs</div>
             </div>
-            <div>
-              <div>Company</div>
+            <div className=" flex flex-col gap-3 ">
+              <div className="text-[#9FE870] text-[1.1rem] pb-2">Company</div>
               <div>About us</div>
               <div>Company</div>
             </div>
-            <div>
-              <div>Legal</div>
+            <div className=" flex flex-col gap-3 ">
+              <div className="text-[#9FE870] text-[1.1rem] pb-2">Legal</div>
               <div>Privacy policy</div>
               <div>Terms and conditions</div>
               <div>Refund policy</div>
             </div>
           </div>
-          <div>
+          <div className=" w-full flex justify-between pt-32 ">
             <div>Instagram</div>
             <div>X</div>
             <div>Linkedin</div>
@@ -44,6 +45,9 @@ const Footer = () => {
           </div>
         </div>
       </Padding>
+      <div className=" mx-auto w-max ">
+        <Healtyme />
+      </div>
     </div>
   );
 };
