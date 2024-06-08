@@ -27,7 +27,7 @@ const Hero = () => {
     }, []);
 
     return (
-        <div className='relative w-[100vw]'>
+        <div className='relative w-[100vw] overflow-hidden'>
             <div className='h-[90vh] hero-section1 px-[1rem] w-[100vh] md:px-[2rem] lg:px-[3rem] absolute grid-cols-2 grid-rows-3 grid'>
                 <div className='h-full w-full col-start-1 row-start-1 lg:row-start-2 row-span-2 relative'>
                     <video
@@ -54,7 +54,7 @@ const Hero = () => {
             </div>
             <div className='h-[90vh] mix-blend-difference flex items-center lg:block'>
                 <div className='flex hero-section flex-col items-center relative z-[100] lg:pt-[6rem]'>
-                    <div className='font-thunder font-[700] text-[#fff] tracking-wide text-center uppercase leading-none text-[4rem] lg:w-[1000px] lg:text-[6rem]'>
+                    <div className='font-thunder font-[700] text-[#fff] tracking-wide text-center uppercase leading-none text-[4rem] lg:w-[900px] lg:text-[6rem]'>
                         A better health ecosystem for the future.
                     </div>
                     <div className='text-[#454745] tracking-[-2%] font-circular text-[0.8rem] font-normal leading-tight w-[350px] text-center md:w-[400px] lg:w-full'>
