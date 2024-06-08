@@ -1,12 +1,22 @@
 "use client";
 import Padding from "@/components/padding";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import src from "@/public/images/profile.png";
 import clsx from "clsx";
+import Copy from "@/public/icons/copy";
+import { toast } from "@/components/ui/use-toast";
 
 const Dashboard = () => {
   const [points, setpoints] = useState(5);
+  const ref = useRef();
+  const copyToClipboard = () => {
+    console.log(ref.current.textContent);
+    navigator.clipboard.writeText(ref.current.textContent);
+    toast({
+      title: "Copied to clipboard",
+    });
+  };
   const recentReports = [
     {
       from: "Dr. John Smith",
@@ -27,16 +37,10 @@ const Dashboard = () => {
       reportDate: "2024-06-05",
     },
     {
-      from: "Dr. Olivia Davis",
-      testName: "Allergy Test",
-      notes: "Mild pollen allergy",
-      reportDate: "2024-05-30",
-    },
-    {
-      from: "Dr. William Martinez",
-      testName: "Blood Sugar Test",
-      notes: "Elevated glucose levels",
-      reportDate: "2024-06-02",
+      from: "Dr. Michael Brown",
+      testName: "MRI",
+      notes: "Minor inflammation",
+      reportDate: "2024-06-05",
     },
   ];
 
@@ -69,7 +73,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        <div className=" grid gap-8 pt-10 grid-cols-2 ">
+        <div className=" grid gap-8 py-10 grid-cols-2 ">
           <div className=" bg-[#F7F7F7] px-[2rem] py-6 rounded-3xl border border-[#F2F2F2] ">
             <div className=" font-circular text-[1.25rem] pb-10">
               Healthscore
@@ -77,7 +81,7 @@ const Dashboard = () => {
             <div className=" font-thunder font-bold text-[7rem] leading-[6rem] ">
               5
             </div>
-            <div className=" font-circular font-medium text-[#90959B] pb-4 ">
+            <div className=" font-circular text-[#90959B] pb-4 ">
               Out of 10 points
             </div>
             <div className=" bg-[#EBEBEB] h-[10px] my-4 w-full rounded-full overflow-hidden relative ">
@@ -108,8 +112,10 @@ const Dashboard = () => {
             </div>
           </div>
           <div className=" bg-[#F7F7F7] px-[1rem] py-6 rounded-3xl border border-[#F2F2F2]">
-            <div className=" text-[1.25rem] font-circular ">Recent Reports</div>
-            <div className="bg-[#FFFFFF] rounded-3xl">
+            <div className=" text-[1.25rem] pb-6 font-circular ">
+              Recent Reports
+            </div>
+            <div className="bg-[#FFFFFF] text-[0.9rem] rounded-3xl">
               <div className="  border-b border-[#E2E7ED] py-3 grid grid-cols-4 text-[#90959B] font-circular  px-[1rem] ">
                 <div>From</div>
                 <div>Test Name</div>
@@ -134,8 +140,96 @@ const Dashboard = () => {
               ))}
             </div>
           </div>
-          <div></div>
-          <div></div>
+          <div className=" bg-[#F7F7F7] px-[2rem] flex flex-col justify-between pb-12 py-6 rounded-3xl border border-[#F2F2F2]">
+            <div className=" text-[1.25rem]  font-circular   ">
+              Health History
+            </div>
+            <div className=" grid grid-cols-3  ">
+              <div className=" flex flex-col gap-1.5 font-circular">
+                <div className=" text-[#3F4144] text-[0.95rem] ">
+                  24, May 2024
+                </div>
+                <div className=" flex items-center ">
+                  <div className=" w-4 h-4 rounded-full bg-[#D9D9D9] " />
+                  <div className=" w-full bg-[#D9D9D9] h-[1px] "></div>
+                </div>
+                <div className=" pt-3 pr-4 text-[#2F3133] text-[0.95rem] ">
+                  Cardiac Arrest
+                </div>
+                <div className=" text-[#90959B] pr-4 text-[0.9rem] ">
+                  Had high cholesterol leading to artery blockage and Cardiac
+                  arrest
+                </div>
+              </div>
+              <div className="  flex flex-col gap-1.5  font-circular">
+                <div className=" text-[#3F4144] text-[0.95rem] ">
+                  24, May 2024
+                </div>
+                <div className=" flex items-center ">
+                  <div className=" w-4 h-4 rounded-full bg-[#D9D9D9] " />
+                  <div className=" w-full bg-[#D9D9D9] h-[1px] "></div>
+                </div>
+                <div className="  pt-3 text-[#2F3133] text-[0.95rem] ">
+                  Cardiac Arrest
+                </div>
+                <div className=" text-[#90959B] pr-4 text-[0.9rem] ">
+                  Had high cholesterol leading to artery blockage and Cardiac
+                  arrest
+                </div>
+              </div>
+              <div className="  flex flex-col gap-1.5  font-circular">
+                <div className=" text-[#3F4144] text-[0.95rem] ">
+                  24, May 2024
+                </div>
+                <div className=" flex items-center ">
+                  <div className=" w-4 h-4 rounded-full bg-[#D9D9D9] " />
+                  <div className=" w-full bg-[#D9D9D9] h-[1px] "></div>
+                </div>
+                <div className="  pt-3 text-[#2F3133] text-[0.95rem] ">
+                  Cardiac Arrest
+                </div>
+                <div className=" text-[#90959B] text-[0.9rem] ">
+                  Had high cholesterol leading to artery blockage and Cardiac
+                  arrest
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="bg-[#F7F7F7] px-[2rem] py-6 rounded-3xl border border-[#F2F2F2]">
+            <div className=" text-[1.25rem] pb-6 font-circular   ">
+              Insurance Details
+            </div>
+            <div className=" flex justify-between ">
+              <div
+                ref={ref}
+                className=" font-thunder text-[7rem] leading-[7rem] pb-4 uppercase font-bold "
+              >
+                SN7326hhsh5
+              </div>
+              <div
+                className=" cursor-pointer "
+                onClick={() => copyToClipboard()}
+              >
+                <Copy />
+              </div>
+            </div>
+            <div className=" flex justify-between ">
+              <div className=" font-circular font-medium text-[0.9rem] ">
+                <div className=" text-[#868A91] ">Package:</div>
+                <div className=" text-[#26282B] text-[0.95rem] ">
+                  Family plan
+                </div>
+                <div className=" text-[#868A91] ">Rs: 15,000/mo</div>
+              </div>
+              <div className=" font-circular font-medium text-[0.9rem] ">
+                <div className=" text-[#868A91] ">Limit</div>
+                <div className=" text-[#26282B] text-[0.95rem] ">
+                  Rs: 10,000,00/10,000,00
+                </div>
+                <div className=" text-[#868A91] ">Available</div>
+              </div>
+            </div>
+          </div>
         </div>
       </Padding>
     </div>
