@@ -27,7 +27,7 @@ const Hero = () => {
     }, []);
 
     return (
-        <div className='relative w-[100vw] overflow-hidden'>
+        <div className='relative w-[100vw] pb-[10rem] overflow-hidden'>
             <div className='h-[90vh] hero-section1 px-[1rem] w-[100vh] md:px-[2rem] lg:px-[3rem] absolute grid-cols-2 grid-rows-3 grid'>
                 <div className='h-full w-full col-start-1 row-start-1 lg:row-start-2 row-span-2 relative'>
                     <video
