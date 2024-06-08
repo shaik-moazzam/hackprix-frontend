@@ -6,6 +6,8 @@ import Image from "next/image";
 import Securitycard from "@/components/securitycard";
 import src1 from "@/public/images/security1.png";
 import src2 from "@/public/images/security2.png";
+import Button from "@/components/button";
+import clsx from "clsx";
 
 const Datasecurity = () => {
   return (
@@ -64,9 +66,14 @@ const Datasecurity = () => {
           <div className=" text-[3rem] md:text-[7rem] md:leading-[7rem] mx-auto text-center    font-thunder font-bold  md:max-w-[700px] ">
             YOUR HEALTH WILL LOVE IT
           </div>
-          <div className=" bg-[#9FE870] px-4 py-2 w-max rounded-full font-circular mx-auto mt-5 ">
-            Get started with healthyme account
+          <div className="  w-full flex justify-center py-[2rem]">
+
+            <Button
+              text={"Get started with healthyme account"}
+              className={clsx("  text-[#000000] bg-[#9FE870]")}
+            />
           </div>
+
         </div>
       </Padding>
     </div>
