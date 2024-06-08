@@ -1,51 +1,79 @@
-import Button from '@/components/button'
-import React from 'react'
+"use client"
+import Button from '@/components/button';
+import clsx from 'clsx';
+import React, { useEffect } from 'react';
 
 const Hero = () => {
+    useEffect(() => {
+        const handleScroll = () => {
+            const heroSection = document.querySelector('.hero-section');
+            const heroSection1 = document.querySelector('.hero-section1');
+            const scrollTop = window.pageYOffset;
+
+            if (heroSection) {
+                heroSection.style.transform = `translateY(${scrollTop * 0.5}px)`;
+            }
+            if (heroSection1) {
+                heroSection1.style.transform = `translateY(${-scrollTop * 1}px)`;
+            }
+        };
+
+        const onScroll = () => {
+            requestAnimationFrame(handleScroll);
+        };
+
+        window.addEventListener('scroll', onScroll);
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
+
     return (
-        <div className=' h-[200vh]  relative  w-[100vw]'>
-            <div className='  h-[90vh] px-[1rem] w-[100vh] md:px-[2rem] lg:px-[3rem] absolute grid-cols-2 grid-rows-3 grid '>
-                <div className='h-full w-full col-start-1 row-start-1 lg:row-start-2 row-span-2  relative'>
+        <div className='relative w-[100vw]'>
+            <div className='h-[90vh] hero-section1 px-[1rem] w-[100vh] md:px-[2rem] lg:px-[3rem] absolute grid-cols-2 grid-rows-3 grid'>
+                <div className='h-full w-full col-start-1 row-start-1 lg:row-start-2 row-span-2 relative'>
                     <video
                         autoPlay
                         muted
                         loop
-                        className=" h-[50%] md:h-[55%] md:w-[70%] lg:h-[85%] absolute top-[1.5rem] left-0 md:left-[-2rem]  lg:left-[3rem] w-[90%] lg:w-[60%] object-cover"
+                        className="h-[50%] md:h-[55%] md:w-[70%] lg:h-[85%] absolute top-[1.5rem] left-0 md:left-[-2rem] lg:left-[3rem] w-[90%] lg:w-[60%] object-cover"
                     >
                         <source src="/images/5998418-hd_1080_1920_30fps.mp4" type="video/mp4" />
                     </video>
                 </div>
-
             </div>
-            <div className=' w-full h-[90vh] px-[1rem] md:px-[2rem] lg:px-[3rem] absolute grid-cols-2 grid-rows-3 grid '>
+            <div className='w-full h-[90vh] px-[1rem] md:px-[2rem] lg:px-[3rem] absolute grid-cols-2 grid-rows-3 grid'>
                 <div className='h-full w-full col-start-2 row-start-3 relative'>
                     <video
                         autoPlay
                         muted
                         loop
-                        className="h-[75%] absolute top-0 md:w-[50%]  lg:left-[50%] w-[80%] right-[1rem] md:right-[2rem] lg:right-0 lg:w-[20%] object-cover"
+                        className="h-[75%] absolute top-0 md:w-[50%] lg:left-[50%] w-[80%] right-[1rem] md:right-[2rem] lg:right-0 lg:w-[20%] object-cover"
                     >
                         <source src="/images/7579595-hd_1080_1920_25fps (1).mp4" type="video/mp4" />
                     </video>
                 </div>
-
             </div>
-            <div className=' h-[90vh] mix-blend-difference sticky top-[6.5rem]  flex items-center lg:block'>
-
-                <div className=' flex  mix-blend-difference   flex-col items-center relative z-[100]  lg:pt-[6rem]'>
-                    <div className=' font-thunder font-[700] text-[#fff]  tracking-wide text-center uppercase leading-none text-[4rem] lg:w-[1000px] lg:text-[6rem]'>A better health ecosystem
-                        for the future.</div>
-                    <div className=' text-[#454745] tracking-[-2%] font-circular text-[0.8rem]  font-normal leading-tight w-[350px] text-center md:w-[400px] lg:w-full'>Get access to your medical history, appointments, insurances an all in one healthcare system.</div>
-                    <div className=' py-[2rem]'>
+            <div className='h-[90vh] mix-blend-difference flex items-center lg:block'>
+                <div className='flex hero-section flex-col items-center relative z-[100] lg:pt-[6rem]'>
+                    <div className='font-thunder font-[700] text-[#fff] tracking-wide text-center uppercase leading-none text-[4rem] lg:w-[1000px] lg:text-[6rem]'>
+                        A better health ecosystem for the future.
                     </div>
-                    <Button
-                        text={"Get started"}
-                        className={" bg-[#60178F] text-[#000000]"}
-                    />
+                    <div className='text-[#454745] tracking-[-2%] font-circular text-[0.8rem] font-normal leading-tight w-[350px] text-center md:w-[400px] lg:w-full'>
+                        Get access to your medical history, appointments, insurances an all in one healthcare system.
+                    </div>
+                    <div className='py-[2rem]'>
+
+                        <svg width="140" height="50" viewBox="0 0 140 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="140" height="50" rx="25" fill="#60178F" />
+                            <path d="M43.424 31H41.872L41.728 29.56C41.232 30.392 40.064 31.24 38.256 31.24C35.296 31.24 32.672 29.064 32.672 25.32C32.672 21.592 35.44 19.416 38.384 19.416C41.136 19.416 42.896 21 43.504 22.872L41.696 23.56C41.312 22.28 40.192 21.192 38.384 21.192C36.544 21.192 34.624 22.504 34.624 25.32C34.624 28.088 36.416 29.48 38.368 29.48C40.656 29.48 41.52 27.912 41.616 26.936H37.872V25.256H43.424V31ZM46.0866 26.248H49.9106C49.8786 25.336 49.2706 24.52 47.9906 24.52C46.8226 24.52 46.1506 25.416 46.0866 26.248ZM50.1186 28.28L51.6866 28.776C51.2706 30.136 50.0386 31.24 48.1666 31.24C46.0546 31.24 44.1826 29.704 44.1826 27.064C44.1826 24.6 46.0066 22.968 47.9746 22.968C50.3746 22.968 51.7826 24.552 51.7826 27.016C51.7826 27.32 51.7506 27.576 51.7346 27.608H46.0386C46.0866 28.792 47.0146 29.64 48.1666 29.64C49.2866 29.64 49.8626 29.048 50.1186 28.28ZM55.1082 20.824V23.208H56.7242V24.856H55.1082V28.472C55.1082 29.16 55.4122 29.448 56.1002 29.448C56.3562 29.448 56.6602 29.4 56.7402 29.384V30.92C56.6282 30.968 56.2762 31.096 55.6042 31.096C54.1642 31.096 53.2682 30.232 53.2682 28.776V24.856H51.8282V23.208H52.2282C53.0602 23.208 53.4282 22.68 53.4282 21.992V20.824H55.1082ZM60.2807 28.888L61.8967 28.44C61.9607 29.144 62.4887 29.768 63.4807 29.768C64.2487 29.768 64.6487 29.352 64.6487 28.872C64.6487 28.456 64.3607 28.136 63.7367 28.008L62.5847 27.752C61.2087 27.448 60.4887 26.552 60.4887 25.48C60.4887 24.12 61.7367 22.968 63.3527 22.968C65.5287 22.968 66.2327 24.376 66.3607 25.144L64.7927 25.592C64.7287 25.144 64.3927 24.424 63.3527 24.424C62.6967 24.424 62.2327 24.84 62.2327 25.32C62.2327 25.736 62.5367 26.04 63.0167 26.136L64.2007 26.376C65.6727 26.696 66.4407 27.592 66.4407 28.744C66.4407 29.928 65.4807 31.24 63.4967 31.24C61.2407 31.24 60.3767 29.768 60.2807 28.888ZM69.8333 20.824V23.208H71.4493V24.856H69.8333V28.472C69.8333 29.16 70.1373 29.448 70.8253 29.448C71.0813 29.448 71.3853 29.4 71.4653 29.384V30.92C71.3533 30.968 71.0013 31.096 70.3293 31.096C68.8893 31.096 67.9933 30.232 67.9933 28.776V24.856H66.5533V23.208H66.9533C67.7853 23.208 68.1533 22.68 68.1533 21.992V20.824H69.8333ZM72.0919 28.888C72.0919 27.496 73.1159 26.728 74.4439 26.536L76.4439 26.232C76.8919 26.168 77.0199 25.944 77.0199 25.672C77.0199 25.016 76.5719 24.488 75.5479 24.488C74.5719 24.488 74.0279 25.112 73.9479 25.896L72.2519 25.512C72.3959 24.168 73.6119 22.968 75.5319 22.968C77.9319 22.968 78.8439 24.328 78.8439 25.88V29.752C78.8439 30.456 78.9239 30.92 78.9399 31H77.2119C77.1959 30.952 77.1319 30.632 77.1319 30.008C76.7639 30.6 75.9959 31.24 74.7319 31.24C73.0999 31.24 72.0919 30.12 72.0919 28.888ZM75.0839 29.784C76.1239 29.784 77.0199 29.288 77.0199 27.768V27.416L74.9879 27.72C74.4119 27.816 73.9479 28.136 73.9479 28.776C73.9479 29.304 74.3479 29.784 75.0839 29.784ZM84.8475 23.16V25.048C84.6395 25.016 84.4315 25 84.2395 25C82.7995 25 82.1435 25.832 82.1435 27.288V31H80.2875V23.208H82.0955V24.456C82.4635 23.608 83.3275 23.112 84.3515 23.112C84.5755 23.112 84.7675 23.144 84.8475 23.16ZM88.2926 20.824V23.208H89.9086V24.856H88.2926V28.472C88.2926 29.16 88.5966 29.448 89.2846 29.448C89.5406 29.448 89.8446 29.4 89.9246 29.384V30.92C89.8126 30.968 89.4606 31.096 88.7886 31.096C87.3486 31.096 86.4526 30.232 86.4526 28.776V24.856H85.0126V23.208H85.4126C86.2446 23.208 86.6126 22.68 86.6126 21.992V20.824H88.2926ZM92.2335 26.248H96.0575C96.0255 25.336 95.4175 24.52 94.1375 24.52C92.9695 24.52 92.2975 25.416 92.2335 26.248ZM96.2655 28.28L97.8335 28.776C97.4175 30.136 96.1855 31.24 94.3135 31.24C92.2015 31.24 90.3295 29.704 90.3295 27.064C90.3295 24.6 92.1535 22.968 94.1215 22.968C96.5215 22.968 97.9295 24.552 97.9295 27.016C97.9295 27.32 97.8975 27.576 97.8815 27.608H92.1855C92.2335 28.792 93.1615 29.64 94.3135 29.64C95.4335 29.64 96.0095 29.048 96.2655 28.28ZM100.151 27.08C100.151 28.568 100.983 29.56 102.247 29.56C103.463 29.56 104.311 28.552 104.311 27.064C104.311 25.576 103.479 24.648 102.263 24.648C101.047 24.648 100.151 25.592 100.151 27.08ZM106.103 19.416V29.576C106.103 30.28 106.167 30.872 106.183 31H104.407C104.375 30.824 104.327 30.312 104.327 29.992C103.959 30.648 103.143 31.192 102.039 31.192C99.7991 31.192 98.2951 29.432 98.2951 27.08C98.2951 24.84 99.8151 23 102.007 23C103.367 23 104.055 23.624 104.295 24.12V19.416H106.103Z" fill="white" />
+                        </svg>
+                    </div>
+
+
                 </div>
+
             </div>
         </div>
-    )
+    );
 }
 
-export default Hero
+export default Hero;
