@@ -22,9 +22,9 @@ const Signup = () => {
   const [isEmpty, setIsEmpty] = useState(0);
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const [name, setname] = useState();
-  const [email, setemail] = useState();
-  const [password, setpassword] = useState();
+  const [name, setname] = useState("");
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
   const [loading, setloading] = useState(false);
   const [pageloading, setpageloading] = useState(true);
   const emailRef = useRef(null);
@@ -56,19 +56,11 @@ const Signup = () => {
   };
   const handleSignup = async () => {
     if (
+      name.trim().length == 0 ||
       emailRef.current.value.trim() === "" ||
       passwordRef.current.value.trim() === ""
     ) {
-      if (
-        emailRef.current.value.trim() === "" &&
-        passwordRef.current.value.trim() === ""
-      ) {
-        setIsEmpty(1);
-      } else if (emailRef.current.value.trim() === "") {
-        setIsEmpty(2);
-      } else {
-        setIsEmpty(3);
-      }
+      setIsEmpty(true);
     } else if (!validateEmail(email)) {
       toast({
         title: "Invalid Email",
@@ -207,12 +199,12 @@ const Signup = () => {
                     onClick={() => {
                       setIsEmpty(0);
                     }}
-                    onChange={(e) => setemail(e.target.value)}
+                    onChange={(e) => setname(e.target.value)}
                     onKeyPress={(e) => handleEnterKeyPress(e, passwordRef)}
                     type="email"
                     className={clsx(
                       " text-[#858585]  px-3 outline-none border-[1px] duration-300   active:border-[1px] focus:border-[1px] focus:border-[#205FFF] w-full rounded-xl leading-none pt-3.5  pb-[0.9rem] bg-[#fff]",
-                      isEmpty === 1 || isEmpty === 2
+                      isEmpty && name.trim().length == 0
                         ? "border-[#F42F4E]"
                         : "border-[#EDEEF4]"
                     )}
@@ -230,7 +222,7 @@ const Signup = () => {
                     type="email"
                     className={clsx(
                       " text-[#858585]  px-3 outline-none border-[1px] duration-300   active:border-[1px] focus:border-[1px] focus:border-[#205FFF] w-full rounded-xl leading-none pt-3.5  pb-[0.9rem] bg-[#fff]",
-                      isEmpty === 1 || isEmpty === 2
+                      isEmpty && email.trim().length == 0
                         ? "border-[#F42F4E]"
                         : "border-[#EDEEF4]"
                     )}
@@ -250,7 +242,7 @@ const Signup = () => {
                       onKeyDown={handleInputKeyDown}
                       className={clsx(
                         "text-[#858585]  px-3 outline-none border-[1px] duration-300   active:border-[1px] focus:border-[1px] focus:border-[#205FFF] w-full rounded-xl pt-3.5  pb-[0.9rem] flex  leading-none bg-[#fff]",
-                        isEmpty === 1 || isEmpty === 3
+                        isEmpty && password.trim() < 6
                           ? "border-[#F42F4E]"
                           : "border-[#EDEEF4]"
                       )}
