@@ -9,8 +9,8 @@ import Button from './button'
 
 const Navbar = () => {
     return (
-        <div className=' py-[2rem] sticky top-0 z-[200]'>
-            <Padding>
+        <div className=' py-[1rem] bg-[#EDF1F4] sticky top-0 z-[200]'>
+            <Padding className={""}>
                 <div className=' flex justify-between items-center'>
                     <div className=' flex gap-10 items-center'>
                         <Logo />
