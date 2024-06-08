@@ -1,14 +1,13 @@
 import React from "react";
 
-const Savecards = () => {
+const Savecards = ({ heading, content }) => {
   return (
     <div className=" max-w-[340px] ">
-      <div className=" font-circular text-white text-[2.5rem] ">
-        Super Secure
+      <div className=" font-circular font-bold text-white text-[2.25rem] ">
+        {heading}
       </div>
       <div className=" text-[#95AEEF] font-circular text-[0.95rem]   font-[450] ">
-        All the patients data is linked with aadhaar card for secure
-        authentication and data safety
+        {content}
       </div>
     </div>
   );

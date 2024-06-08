@@ -5,6 +5,7 @@ import "@/public/fonts/Circularstd/stylesheet.css";
 import "@/public/fonts/thunder/stylesheet.css";
 import Navbar from "@/components/navbar";
 import Lenis1 from "@/components/lenis";
+import Footer from "@/components/footer";
 
 export const metadata = {
   title: "HACKPRIX",
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
           <UserProvider>
             <Navbar />
             {children}
+            <Footer />
           </UserProvider>
         </Lenis1>
         <Toaster />
