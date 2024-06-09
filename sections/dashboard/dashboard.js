@@ -16,12 +16,16 @@ const Dashboard = () => {
   const [isappointment, setisappointment] = useState(false);
   const [loading, setloading] = useState(true);
   const [points, setpoints] = useState(5);
+  const [point, setPoint] = useState(false);
 
   useEffect(() => {
     const token = getToken();
     const getData = async () => {
       const data = await GetDAshData(token);
-      if (data.lastSlot) {
+      if(data.error){
+        setPoint(true);
+      }
+      else if (data.lastSlot) {
         setdata(data);
         setpoints(data.number);
       }

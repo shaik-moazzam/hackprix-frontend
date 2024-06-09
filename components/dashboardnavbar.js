@@ -12,14 +12,22 @@ const Dashboardnavbar = () => {
   const user = state.user;
   const route = useRouter();
 
-  useEffect(()=>{
-    if(user && !user.phone){
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (user && !user.phone) {
       route.push("/personaldetails");
+      console.log("1")
     }
-    else if(user && (!user.alchohol || !user.diet || !user.smoking || !user.exercise || !user.no_of_meals)){
+    else if (user && (!user.alchohol || !user.diet || !user.smoking || !user.exercise || !user.no_of_meals)) {
       route.push("/onboarding");
+      console.log("2")
     }
-  },[user])
+    else {
+      if (!token) {
+        route.push("/login");
+      }
+    }
+  }, [user])
   const [isactive, setactive] = useState(0);
   return (
     <div className=" py-2">
