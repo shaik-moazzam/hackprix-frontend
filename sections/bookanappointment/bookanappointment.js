@@ -8,6 +8,7 @@ import Search from "@/public/icons/search";
 import Selected from "@/public/icons/selected";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import Doctorcard from "@/components/doctorcard";
 const Bookanappointment = () => {
   const [fillter, setfillter] = useState(false);
   const [filltervalue, setfilltervalue] = useState("teacher");
@@ -78,6 +79,16 @@ const Bookanappointment = () => {
               </motion.div>
             </div>
           </div>
+        </div>
+        <div className=" grid grid-cols-4">
+          <Doctorcard
+            name={"Miss. Shehnazz"}
+            qualification={"Apollo hospitals"}
+            feild={"Psychologist"}
+            desc={
+              "As a science teacher, I specialise in guiding students through the captivating realms of biology, chemistry, and physics through the captivating realms of biology, chemistry, and physics"
+            }
+          />
         </div>
       </Padding>
     </div>
