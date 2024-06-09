@@ -29,15 +29,15 @@ const People = () => {
                                 setimage(prevImage => prevImage - 1);
 
                             }
-                        }} className=' bg-[#F7F8FA] border-[1px] border-[#E8E8EA] w-max p-3 px-4 rounded-full'>
+                        }} className={clsx('  w-max p-3 px-4 rounded-full', image > 1 ? "bg-[#9FE870] border-[#9FE870]" : "bg-[#F7F8FA] border-[1px] border-[#E8E8EA]")}>
                             <Arrowleft color={"#8A8F95"} />
                         </div>
                         <div onClick={() => {
                             if (image >= 0 && image < 4) {
                                 setimage(prevImage => prevImage + 1);
                             }
-                        }} className=' bg-[#9FE870] rotate-180 border-[1px] border-[#9FE870] w-max p-3 px-4 rounded-full'>
-                            <Arrowleft />
+                        }} className={clsx('  rotate-180 border-[1px]  w-max p-3 px-4 rounded-full', image >= 0 && image < 4 ? "bg-[#9FE870] border-[#9FE870]" : "bg-[#F7F8FA] border-[1px] border-[#E8E8EA]")}>
+                            <Arrowleft color={"#8A8F95"} />
                         </div>
                     </div>
                 </div>
