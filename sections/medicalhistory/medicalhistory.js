@@ -7,10 +7,16 @@ import React, { useEffect, useState } from "react";
 import src from "@/public/images/tube.png";
 import Gettimeline from "@/api/medicaltimeline";
 import { getToken } from "@/api/getToken";
+import { useUser } from "@/redux/userContext";
+import { BASE_URL, IMGBASE_URL } from "@/api/variables";
+import Link from "next/link";
 
 const Medicalhistory = () => {
+  const { state } = useUser();
+  const user = state.user;
   const [data, setdata] = useState();
   const [loading, setloading] = useState(true);
+  const [criticaldetails, setcriticaldetails] = useState();
   useEffect(() => {
     const getData = async () => {
       const token = getToken();
@@ -18,6 +24,7 @@ const Medicalhistory = () => {
       if (data) {
         console.log(data);
         setdata(data);
+        setcriticaldetails(data[0]);
         setloading(false);
       }
     };
@@ -65,6 +72,9 @@ const Medicalhistory = () => {
 
     return date.toLocaleDateString("en-US", options);
   }
+  const update = (index) => {
+    setcriticaldetails(data[index]);
+  };
 
   if (loading) {
     return (
@@ -99,12 +109,15 @@ const Medicalhistory = () => {
                   {formatDate(item.date)}
                 </div>
                 <div className="pt-1 pr-4 text-[#2F3133] text-[1rem]">
-                  {item.title}
+                  {item.Issue}
                 </div>
                 <div className="text-[#90959B] max-w-[260px] pr-4 text-[0.9rem]">
                   {item.Remark}
                 </div>
-                <div className="flex gap-2 items-center text-[#52C509] pt-2">
+                <div
+                  className="flex gap-2 cursor-pointer items-center text-[#52C509] pt-2"
+                  onClick={() => update(index)}
+                >
                   View details
                   <Arrowright h={20} color={"#52C509"} />
                 </div>
@@ -121,38 +134,16 @@ const Medicalhistory = () => {
               Appointment Details:
             </div>
             <div className=" grid grid-cols-2 gap-[2rem]">
-              <div>
-                <div className=" text-[#7A7D7F] font-circular text-[0.9rem] font-medium">
-                  Heart rate
+              {criticaldetails.critical_details.map((data) => (
+                <div>
+                  <div className=" text-[#7A7D7F] font-circular text-[0.9rem] font-medium">
+                    {data.description}
+                  </div>
+                  <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
+                    {data.value}
+                  </div>
                 </div>
-                <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
-                  140 BPM
-                </div>
-              </div>
-              <div>
-                <div className=" text-[#7A7D7F] font-circular text-[0.9rem] font-medium">
-                  Sugar level (before fasting)
-                </div>
-                <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
-                  130
-                </div>
-              </div>
-              <div>
-                <div className=" text-[#7A7D7F] font-circular text-[0.9rem] font-medium">
-                  Sugar level (after fasting)
-                </div>
-                <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
-                  99
-                </div>
-              </div>
-              <div>
-                <div className=" text-[#7A7D7F] font-circular text-[0.9rem] font-medium">
-                  BMI
-                </div>
-                <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
-                  6.7 (Obese)
-                </div>
-              </div>
+              ))}
             </div>
           </div>
           <div className=" w-full my-10 bg-[#FFFFFF] p-[1.5rem] rounded-3xl border-[1px] border-[#E4E4E4]">
@@ -165,7 +156,7 @@ const Medicalhistory = () => {
                   Doctor
                 </div>
                 <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
-                  Subramaniyam Swamy
+                  {criticaldetails.doctor}
                 </div>
               </div>
               <div>
@@ -173,8 +164,7 @@ const Medicalhistory = () => {
                   Remark
                 </div>
                 <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
-                  Patient is overweight and is chain smoker, casual drinker.
-                  Recommended to do regular exercises and reduce smoking.
+                  {criticaldetails.Remark}
                 </div>
               </div>
               <div>
@@ -182,7 +172,7 @@ const Medicalhistory = () => {
                   Hospital
                 </div>
                 <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
-                  Virinchi Hospitals
+                  {criticaldetails.hospital}
                 </div>
               </div>
               <div>
@@ -190,7 +180,7 @@ const Medicalhistory = () => {
                   Issue
                 </div>
                 <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
-                  Patient had fast heart beat and chest pain.
+                  {criticaldetails.Issue}
                 </div>
               </div>
             </div>
@@ -239,10 +229,11 @@ const Medicalhistory = () => {
               Attachments & Reports
             </div>
             <div className=" flex gap-4 ">
-              <Image className=" w-[45px] h-[50px] " src={src} />
-              <Image className=" w-[45px] h-[50px] " src={src} />
-              <Image className=" w-[45px] h-[50px] " src={src} />
-              <Image className=" w-[45px] h-[50px] " src={src} />
+              {criticaldetails.docs.map((data) => (
+                <Link target="blank" href={IMGBASE_URL + data.url}>
+                  <Image className=" w-[45px] h-[50px] " src={src} />
+                </Link>
+              ))}
             </div>
           </div>
         </div>

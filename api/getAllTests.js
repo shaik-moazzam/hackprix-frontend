@@ -1,10 +1,10 @@
 import axiosInstance from "./axiosinstance";
-const Gettimeline = async (token) => {
+const getAllTests = async (token) => {
   const headers = {
     authorization: `Bearer ${token}`,
   };
   try {
-    const response = await axiosInstance.get("patient/medicalTimeline", {
+    const response = await axiosInstance.get("patient/getAllTests", {
       headers,
     });
 
@@ -14,4 +14,4 @@ const Gettimeline = async (token) => {
     return null;
   }
 };
-export default Gettimeline;
+export default getAllTests;

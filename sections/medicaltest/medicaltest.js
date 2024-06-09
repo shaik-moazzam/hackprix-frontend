@@ -1,15 +1,33 @@
 "use client";
 import Padding from "@/components/padding";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import src from "@/public/images/bodytest.png";
 import src1 from "@/public/images/tube.png";
 import { motion } from "framer-motion";
 import Button from "@/components/button";
 import clsx from "clsx";
 import Link from "next/link";
+import getAllTests from "@/api/getAllTests";
+import { getToken } from "@/api/getToken";
 
 const Medicaltest = () => {
+  const [data, setdata] = useState();
+  const [activetab, setactivetab] = useState(1);
+  const [loading, setloading] = useState(true);
+  useEffect(() => {
+    const getdata = async () => {
+      const token = getToken();
+      const data = await getAllTests(token);
+      console.log(data);
+      if (data) {
+        setloading(false);
+        setdata(data);
+      }
+    };
+    getdata();
+  }, []);
+
   const testData = [
     {
       id: 1,
@@ -39,7 +57,15 @@ const Medicaltest = () => {
       imageSrc: src1,
     },
   ];
-  const [activetab, setactivetab] = useState(1);
+
+  if (loading) {
+    return (
+      <div className="h-[100vh] flex justify-center items-center">
+        <div className="loader-line" />
+      </div>
+    );
+  }
+
   return (
     <div>
       <Padding>
@@ -53,7 +79,6 @@ const Medicaltest = () => {
             </div>
             <div className="  mt-28   ">
               <Button text={" Book Now"} className={" bg-white"} />
-
             </div>
           </div>
           <div className=" w-[35%] ">
@@ -66,20 +91,20 @@ const Medicaltest = () => {
               <motion.div
                 className={clsx(
                   "relative z-40  font-circular hover:cursor-pointer flex justify-center w-[100%] items-center leading-none  rounded-full h-max xl:px-5 xl:py-4 px-5 py-4 transition-all duration-1000",
-                  activetab === 1 ? "text-[#000000]" : "text-[#000000]"
+                  activetab === 0 ? "text-[#000000]" : "text-[#000000]"
                 )}
-                onClick={() => setactivetab(1)}
+                onClick={() => setactivetab(0)}
               >
                 Available tests
               </motion.div>
               <motion.div
                 className={clsx(
                   "relative z-40  font-circular flex justify-center w-[100%] items-center leading-none rounded-full xl:px-5 xl:py-4 px-5 py-4 transition-all duration-1000 cursor-pointer",
-                  activetab === 2 ? "text-[#000000]" : "text-[#000000]"
+                  activetab === 1 ? "text-[#000000]" : "text-[#000000]"
                 )}
                 onClick={() => {
                   // if (user?.mode) {
-                  setactivetab(2);
+                  setactivetab(1);
                   // }
                 }}
               >
@@ -88,8 +113,9 @@ const Medicaltest = () => {
 
               <motion.span
                 style={{
-                  transform: `translateX(calc(${(activetab - 1) * 100}% + (${activetab === 1 ? "0.25rem" : "0rem"
-                    })))`, // Adjust translation with gap
+                  transform: `translateX(calc(${activetab * 100}% + (${
+                    activetab == 0 ? "0.25rem" : "0rem"
+                  })))`, // Adjust translation with gap
                   transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                   width: "49.4%", // Set width to 1/3 of its parent
                   height: "calc(100% - 0.5rem)", // Adjust height with 0.25rem gap
@@ -109,36 +135,35 @@ const Medicaltest = () => {
                 <div className=" w-[15%] ">Price</div>
                 <div className=" w-[20%] "></div>
               </div>
-              {testData.map((item, index) => (
+              {data.map((item, index) => (
                 <div
                   key={item.id}
-                  className={`px-3 py-3 flex items-center gap-2 border-b border-[#F7F7F7] ${index % 2 !== 0 ? "bg-[#FFFFFF]" : "bg-[#F7F7F7]"
-                    }`}
+                  className={`px-3 py-3 flex items-center gap-2 border-b border-[#F7F7F7] ${
+                    index % 2 !== 0 ? "bg-[#FFFFFF]" : "bg-[#F7F7F7]"
+                  }`}
                 >
-                  <div className="w-[5%] text-center">{item.id}</div>
+                  <div className="w-[5%] text-center">{index + 1}</div>
                   <div className="w-[20%] flex gap-2.5">
-                    <Image
-                      src={item.imageSrc}
-                      alt={item.name}
-                      className="w-[45px]"
-                    />
+                    <Image src={src1} alt={item.title} className="w-[45px]" />
                     <div>
-                      <div>{item.name}</div>
-                      <div className="text-[#9F9D9D]">{item.duration}</div>
+                      <div>{item.title}</div>
+                      <div className="text-[#9F9D9D]">1-2 days</div>
                     </div>
                   </div>
-                  <div className="w-[15%]">{item.code}</div>
-                  <div className="w-[25%]">{item.description}</div>
-                  <div className="w-[15%]">{item.price}</div>
+                  <div className="w-[15%]">{item.testId}</div>
+                  <div className="w-[25%]">{item.biologicalname}</div>
+                  <div className="w-[15%]">Rs:{item.price}</div>
                   <div className="w-[20%]">
-                    <Button
-                      text={"Book Now"}
-                      className={
-                        index % 2 !== 0
-                          ? " bg-white border border-[#EAE7E7] "
-                          : "bg-white"
-                      }
-                    />
+                    <Link href={`/dashboard/medicaltest/details`}>
+                      <Button
+                        text={"View"}
+                        className={
+                          index % 2 !== 0
+                            ? " bg-white border border-[#EAE7E7] "
+                            : "bg-white"
+                        }
+                      />
+                    </Link>
                   </div>
                 </div>
               ))}
@@ -153,30 +178,26 @@ const Medicaltest = () => {
                 <div className=" w-[15%] ">Price</div>
                 <div className=" w-[20%] "></div>
               </div>
-              {testData.map((item, index) => (
+              {data.map((item, index) => (
                 <div
                   key={item.id}
-                  className={`px-3 py-3 flex items-center gap-2 border-b border-[#F7F7F7] ${index % 2 !== 0 ? "bg-[#FFFFFF]" : "bg-[#F7F7F7]"
-                    }`}
+                  className={`px-3 py-3 flex items-center gap-2 border-b border-[#F7F7F7] ${
+                    index % 2 !== 0 ? "bg-[#FFFFFF]" : "bg-[#F7F7F7]"
+                  }`}
                 >
-                  <div className="w-[5%] text-center">{item.id}</div>
+                  <div className="w-[5%] text-center">{index + 1}</div>
                   <div className="w-[20%] flex gap-2.5">
-                    <Image
-                      src={item.imageSrc}
-                      alt={item.name}
-                      className="w-[45px]"
-                    />
+                    <Image src={src1} alt={item.title} className="w-[45px]" />
                     <div>
-                      <div>{item.name}</div>
-                      <div className="text-[#9F9D9D]">{item.duration}</div>
+                      <div>{item.title}</div>
+                      <div className="text-[#9F9D9D]">1-2 days</div>
                     </div>
                   </div>
-                  <div className="w-[15%]">{item.code}</div>
-                  <div className="w-[25%]">{item.description}</div>
-                  <div className="w-[15%]">{item.price}</div>
+                  <div className="w-[15%]">{item.testId}</div>
+                  <div className="w-[25%]">{item.biologicalname}</div>
+                  <div className="w-[15%]">Rs:{item.price}</div>
                   <div className="w-[20%]">
                     <Link href={`/dashboard/medicaltest/details`}>
-
                       <Button
                         text={"View"}
                         className={
