@@ -13,21 +13,26 @@ const Dashboardnavbar = () => {
   const route = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (user && !user.phone) {
       route.push("/personaldetails");
-      console.log("1")
-    }
-    else if (user && (!user.alchohol || !user.diet || !user.smoking || !user.exercise || !user.no_of_meals)) {
+      console.log("1");
+    } else if (
+      user &&
+      (!user.alchohol ||
+        !user.diet ||
+        !user.smoking ||
+        !user.exercise ||
+        !user.no_of_meals)
+    ) {
       route.push("/onboarding");
-      console.log("2")
-    }
-    else {
+      console.log("2");
+    } else {
       if (!token) {
         route.push("/login");
       }
     }
-  }, [user])
+  }, [user]);
   const [isactive, setactive] = useState(0);
   return (
     <div className=" py-2">
@@ -36,16 +41,15 @@ const Dashboardnavbar = () => {
           <div className=" px-[3rem] font-circular text-[1.25rem] py-2 pb-10 ">
             Healthyme
           </div>
-          <div onClick={() => {
+          {/* <div onClick={() => {
             localStorage.removeItem("token")
             route.push("/login")
           }} className="text-red-500 py-2 px-4 h-max w-max border-[1px] cursor-pointer hover:text-white hover:bg-red-500 font-circular border-red-500 rounded-full mx-6 my-2">
             Logout
-          </div>
+          </div> */}
         </div>
         <div className=" px-[3rem]  font-circular border-b border-b-[#DCE2EE] text-[#60636C] flex gap-14 ">
           <Link href={"/dashboard"}>
-
             <div
               onClick={() => setactive(0)}
               className={clsx(
@@ -78,10 +82,8 @@ const Dashboardnavbar = () => {
                 ></motion.div>
               )}
             </div>
-
           </Link>
           <Link href={"/dashboard/appointments"}>
-
             <div
               onClick={() => setactive(2)}
               className={clsx(
@@ -99,7 +101,6 @@ const Dashboardnavbar = () => {
             </div>
           </Link>
           <Link href={"/dashboard/medicaltest"}>
-
             <div
               onClick={() => setactive(3)}
               className={clsx(
@@ -148,7 +149,6 @@ const Dashboardnavbar = () => {
             )} */}
           {/* </div> */}
           <Link href={"/dashboard/crowdfunding"}>
-
             <div
               onClick={() => setactive(6)}
               className={clsx(

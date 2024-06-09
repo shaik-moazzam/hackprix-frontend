@@ -25,8 +25,7 @@ const Dashboard = () => {
       const data = await GetDAshData(token);
       if (data.error) {
         setPoint(true);
-      }
-      else if (data.lastSlot) {
+      } else if (data.lastSlot) {
         setdata(data);
         setpoints(data.number);
       }
@@ -42,10 +41,10 @@ const Dashboard = () => {
         setCountdown(calculateCountdown(data.lastSlot.slot.start_time));
       }, 1000);
       setisappointment(true);
+      setloading(false);
       // console.log();
       return () => clearInterval(interval);
     }
-    setloading(false);
   }, [data]);
   const ref = useRef();
   const copyToClipboard = () => {
@@ -126,7 +125,7 @@ const Dashboard = () => {
     } else {
       window.open(`/meeting?token=${data2}`, "_blank");
     }
-  }
+  };
 
   if (loading) {
     return (
@@ -139,40 +138,47 @@ const Dashboard = () => {
   return (
     <div>
       <Padding>
-        {!isappointment && <div
-          className={clsx(
-            " bg-[#1D55E5] mt-5 px-[3rem] py-8 pt-12 rounded-3xl ",
-            isappointment ? "" : "hidden"
-          )}
-        >
-          <div className=" text-[5rem] pb-20 text-white leading-[5rem] md:max-w-[600px] font-thunder font-bold ">
-            YOU HAVE AN UPCOMING APPOINTMENT
-          </div>
-          <div>
-            <div>
-              <div className=" text-[#BBD8FA] py-5 font-circular ">
-                On{" "}
-                <span className=" text-white ">
-                  {formatDate(data?.lastSlot?.date)}
-                </span>
-              </div>
+        {isappointment && (
+          <div
+            className={clsx(
+              " bg-[#1D55E5] mt-5 px-[3rem] py-8 pt-12 rounded-3xl ",
+              isappointment ? "" : "hidden"
+            )}
+          >
+            <div className=" text-[5rem] pb-20 text-white leading-[5rem] md:max-w-[600px] font-thunder font-bold ">
+              YOU HAVE AN UPCOMING APPOINTMENT
             </div>
-            <div className=" flex justify-between w-full items-end ">
-              <div className=" bg-[#1847C0] font-circular rounded-full flex gap-3 p-3 pr-6 w-max ">
-                <Image className=" w-[3rem] " src={src} />
-                <div>
-                  <div className=" text-white ">{data?.lastSlot?.slot?.doctor?.name}</div>
-                  <div className=" text-[#8FAAF1] text-[0.9rem] ">
-                    Cardiologist
-                  </div>
+            <div>
+              <div>
+                <div className=" text-[#BBD8FA] py-5 font-circular ">
+                  On{" "}
+                  <span className=" text-white ">
+                    {formatDate(data?.lastSlot?.date)}
+                  </span>
                 </div>
               </div>
-              <div onClick={() => joinMeet()} className="cursor-pointer text-white bg-[#1847C0] font-circular py-2 px-5 w-max rounded-full ">
-                {countdown}
+              <div className=" flex justify-between w-full items-end ">
+                <div className=" bg-[#1847C0] font-circular rounded-full flex gap-3 p-3 pr-6 w-max ">
+                  <Image className=" w-[3rem] " src={src} />
+                  <div>
+                    <div className=" text-white ">
+                      {data?.lastSlot?.slot?.doctor?.name}
+                    </div>
+                    <div className=" text-[#8FAAF1] text-[0.9rem] ">
+                      Cardiologist
+                    </div>
+                  </div>
+                </div>
+                <div
+                  onClick={() => joinMeet()}
+                  className="cursor-pointer text-white bg-[#1847C0] font-circular py-2 px-5 w-max rounded-full "
+                >
+                  {countdown}
+                </div>
               </div>
             </div>
           </div>
-        </div>}
+        )}
         <div className=" grid gap-8 py-10 grid-cols-2 ">
           <div className=" bg-[#F7F7F7] px-[2rem] py-6 rounded-3xl border border-[#F2F2F2] ">
             <div className=" font-circular text-[1.25rem] pb-10">
