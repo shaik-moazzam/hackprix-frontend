@@ -29,21 +29,24 @@ const Dashboardnavbar = () => {
               ></motion.div>
             )}
           </div>
-          <div
-            className={clsx(
-              " pb-2 translate-y-[1px] cursor-pointer duration-300 relative ",
-              isactive == 1 ? "text-[#52C509]   " : "text-[#60636C] "
-            )}
-            onClick={() => setactive(1)}
-          >
-            Medical history
-            {isactive == 1 && (
-              <motion.div
-                layoutId="tabs"
-                className=" absolute h-[1px] w-full bottom-0 bg-[#52C509] "
-              ></motion.div>
-            )}
-          </div>
+          <Link href={"/dashboard/medicalhistory"}>
+            <div
+              className={clsx(
+                " pb-2 translate-y-[1px] cursor-pointer duration-300 relative ",
+                isactive == 1 ? "text-[#52C509]   " : "text-[#60636C] "
+              )}
+              onClick={() => setactive(1)}
+            >
+              Medical history
+              {isactive == 1 && (
+                <motion.div
+                  layoutId="tabs"
+                  className=" absolute h-[1px] w-full bottom-0 bg-[#52C509] "
+                ></motion.div>
+              )}
+            </div>
+
+          </Link>
           <Link href={"/dashboard/appointments"}>
 
             <div
@@ -62,21 +65,24 @@ const Dashboardnavbar = () => {
               )}
             </div>
           </Link>
-          <div
-            onClick={() => setactive(3)}
-            className={clsx(
-              " pb-2 translate-y-[1px] relative cursor-pointer duration-300 ",
-              isactive == 3 ? "text-[#52C509]   " : "text-[#60636C] "
-            )}
-          >
-            Medical tests
-            {isactive == 3 && (
-              <motion.div
-                layoutId="tabs"
-                className=" absolute h-[1px] w-full bottom-0 bg-[#52C509] "
-              ></motion.div>
-            )}
-          </div>
+          <Link href={"/dashboard/medicaltest"}>
+
+            <div
+              onClick={() => setactive(3)}
+              className={clsx(
+                " pb-2 translate-y-[1px] relative cursor-pointer duration-300 ",
+                isactive == 3 ? "text-[#52C509]   " : "text-[#60636C] "
+              )}
+            >
+              Medical tests
+              {isactive == 3 && (
+                <motion.div
+                  layoutId="tabs"
+                  className=" absolute h-[1px] w-full bottom-0 bg-[#52C509] "
+                ></motion.div>
+              )}
+            </div>
+          </Link>
 
           <div
             onClick={() => setactive(4)}

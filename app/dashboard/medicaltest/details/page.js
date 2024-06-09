@@ -1,4 +1,4 @@
-import Medicalhistory from "@/sections/medicalhistory/medicalhistory";
+
 import React from "react";
 
 const Page = () => {
