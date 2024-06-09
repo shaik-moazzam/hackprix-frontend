@@ -1,9 +1,7 @@
 import axiosInstance from "./axiosinstance";
 import { getToken } from "./getToken";
-import { BACK_KEY } from "./variables";
 const bookTests = async (email, password, date, time) => {
     const token = getToken()
-    console.log(token)
     const headers = {
         authorization: `Bearer ${token}`,
     };
@@ -14,7 +12,7 @@ const bookTests = async (email, password, date, time) => {
         time: time
     };
     try {
-        const response = await axiosInstance.post("/patient/bookTests", { headers }, requestData);
+        const response = await axiosInstance.post("/patient/bookTests", requestData, { headers });
 
         return response.data;
     } catch (error) {
