@@ -439,51 +439,59 @@ const Medicaltest = () => {
               ))}
             </div>
           ) : (
-            <div className=" my-6 border border-[#E4E4E4] text-[0.95rem] font-circular overflow-hidden rounded-3xl">
-              <div className=" px-3 bg-[#F7F7F7] border-b-[1px] border-[#E5E5E5] py-3 flex gap-2 ">
-                <div className=" w-[5%] text-center ">#</div>
-                <div className=" w-[20%] ">Name</div>
-                <div className=" w-[15%] ">Test-code</div>
-                <div className=" w-[25%] ">Biological name</div>
-                <div className=" w-[15%] ">Price</div>
-                <div className=" w-[20%] "></div>
-              </div>
-              {data.map((item, index) => (
-                <div
-                  key={item.id}
-                  className={`px-3 py-3 flex items-center gap-2 border-b border-[#F7F7F7] ${index % 2 !== 0 ? "bg-[#FFFFFF]" : "bg-[#F7F7F7]"
-                    }`}
-                >
-                  <div className="w-[5%] text-center">{index + 1}</div>
-                  <div className="w-[20%] flex gap-2.5">
-                    <Image src={src1} alt={item.title} className="w-[45px]" />
-                    <div>
-                      <div>{item.title}</div>
-                      <div className="text-[#9F9D9D]">1-2 days</div>
+            data.lenght > 0 ?
+              <div className=" my-6 border border-[#E4E4E4] text-[0.95rem] font-circular overflow-hidden rounded-3xl">
+                <div className=" px-3 bg-[#F7F7F7] border-b-[1px] border-[#E5E5E5] py-3 flex gap-2 ">
+                  <div className=" w-[5%] text-center ">#</div>
+                  <div className=" w-[20%] ">Name</div>
+                  <div className=" w-[15%] ">Test-code</div>
+                  <div className=" w-[25%] ">Biological name</div>
+                  <div className=" w-[15%] ">Price</div>
+                  <div className=" w-[20%] "></div>
+                </div>
+                {data.map((item, index) => (
+                  <div
+                    key={item.id}
+                    className={`px-3 py-3 flex items-center gap-2 border-b border-[#F7F7F7] ${index % 2 !== 0 ? "bg-[#FFFFFF]" : "bg-[#F7F7F7]"
+                      }`}
+                  >
+                    <div className="w-[5%] text-center">{index + 1}</div>
+                    <div className="w-[20%] flex gap-2.5">
+                      <Image src={src1} alt={item.title} className="w-[45px]" />
+                      <div>
+                        <div>{item.title}</div>
+                        <div className="text-[#9F9D9D]">1-2 days</div>
+                      </div>
+                    </div>
+                    <div className="w-[15%]">{item.testId}</div>
+                    <div className="w-[25%]">{testData[index].description}</div>
+                    <div className="w-[15%]">{testData[index].price}</div>
+                    <div className="w-[20%]">
+                      <Link href={`/dashboard/medicaltest/details?id=${item._id}`}>
+                        <Button
+                          text={"View Result"}
+                          className={
+                            index % 2 !== 0
+                              ? " bg-white border border-[#EAE7E7] "
+                              : "bg-white"
+                          }
+                        />
+                      </Link>
                     </div>
                   </div>
-                  <div className="w-[15%]">{item.testId}</div>
-                  <div className="w-[25%]">{testData[index].description}</div>
-                  <div className="w-[15%]">{testData[index].price}</div>
-                  <div className="w-[20%]">
-                    <Link href={`/dashboard/medicaltest/details?id=${item._id}`}>
-                      <Button
-                        text={"View Result"}
-                        className={
-                          index % 2 !== 0
-                            ? " bg-white border border-[#EAE7E7] "
-                            : "bg-white"
-                        }
-                      />
-                    </Link>
-                  </div>
+                ))}
+              </div> :
+              <div>
+                <div className=" text-center text-[#9F9D9D] text-[1.5rem] font-circular font-bold">
+                  No test available
                 </div>
-              ))}
-            </div>
+
+              </div>
+
           )}
         </div>
-      </Padding>
-    </div>
+      </Padding >
+    </div >
   );
 };
 

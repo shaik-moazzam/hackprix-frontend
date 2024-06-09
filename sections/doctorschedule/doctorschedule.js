@@ -8,6 +8,7 @@ import { useSearchParams } from 'next/navigation';
 import bookSlot from '@/api/bookSlot';
 import { toast } from '@/components/ui/use-toast';
 import { useUser } from '@/redux/userContext';
+import Newwww from '@/components/newwww';
 
 const Doctorschedule = () => {
     const { state } = useUser();
@@ -369,12 +370,10 @@ const Doctorschedule = () => {
                                                     "h-[150px] w-[200px]   relative  border-[0.25px]  border-[#e8e8e8] "
                                                 )}
                                             >
-                                                <div className={clsx(' w-[100%] h-[100%] ', scheduleData.busy ? scheduleData.patient.toString() == user._id.toString() ? "bg-[#a7a5a5]" : "bg-[#F6F6F6]" : "hidden")}>
+                                                <div className={clsx(' w-[100%] h-[100%] ', scheduleData.busy ? scheduleData.patient.toString() == user._id.toString() ? "bg-[#393838]" : "bg-[#F6F6F6]" : "hidden")}>
 
                                                 </div>
-                                                <div onClick={() => slotBooked(scheduleData)} className={clsx(' w-[100%] h-[100%] flex justify-center items-center ', !scheduleData.busy ? "" : "hidden")}>
-                                                    <Button wfull={" w-[120px]"} text={bookload ? <div className='loader1' /> : "Book now"} className={" border-[1px] border-[#000]"} />
-                                                </div>
+                                                <Newwww scheduleData={scheduleData} />
 
                                             </div>
                                         );

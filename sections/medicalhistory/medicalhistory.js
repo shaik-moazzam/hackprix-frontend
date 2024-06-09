@@ -25,8 +25,8 @@ const Medicalhistory = () => {
         console.log(data);
         setdata(data);
         setcriticaldetails(data.slice().reverse()[0]);
-        setloading(false);
       }
+      setloading(false);
     };
     getData();
   }, []);
@@ -76,7 +76,7 @@ const Medicalhistory = () => {
     setcriticaldetails(data.slice().reverse()[index]);
   };
 
-  if (loading) {
+  if (loading || data.length <= 0) {
     return (
       <div className="flex justify-center items-center h-[100vh] ">
         <div className=" loader-line "></div>

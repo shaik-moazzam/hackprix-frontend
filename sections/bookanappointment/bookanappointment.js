@@ -127,7 +127,7 @@ const Bookanappointment = () => {
             </div>
           </div>
         </div>
-        <div className=" grid grid-cols-4">
+        <div className=" grid grid-cols-4 gap-[2rem]">
           {doctors?.map((obj, index) => (
             obj.specialization &&
             <Doctorcard
