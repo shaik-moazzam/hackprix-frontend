@@ -1,11 +1,25 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Padding from "./padding";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useUser } from "@/redux/userContext";
+import { useRouter } from "next/navigation";
 
 const Dashboardnavbar = () => {
+  const { state } = useUser();
+  const user = state.user;
+  const route = useRouter();
+
+  useEffect(()=>{
+    if(user && !user.phone){
+      route.push("/personaldetails");
+    }
+    else if(user && (!user.alchohol || !user.diet || !user.smoking || !user.exercise || !user.no_of_meals)){
+      route.push("/onboarding");
+    }
+  },[user])
   const [isactive, setactive] = useState(0);
   return (
     <div className=" py-2">

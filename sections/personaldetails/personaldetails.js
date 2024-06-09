@@ -1,7 +1,7 @@
 "use client"
 import Logo from '@/public/icons/logo';
 import Link from 'next/link';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import People1 from "../../public/images/signup.png";
 import Image from 'next/image';
 import countries from '@/utils/countries';
@@ -12,7 +12,28 @@ import Search from '@/public/icons/search';
 import { DatePicker } from '@/components/ui/datepicker';
 import { useToast } from '@/components/ui/use-toast';
 import Otppop from '@/components/otppop';
+import { useUser } from '@/redux/userContext';
+import sendOtp from '@/api/sendOtp';
+import { useRouter } from 'next/navigation';
 const Personaldetails = () => {
+    const { state } = useUser();
+    const user = state.user
+    const route = useRouter()
+    const [pageLoad, setPageLoad] = useState(true);
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!user && !token) {
+            route.push("/login")
+            setPageLoad(false);
+        }
+        else if (user && user.phone && user.gender) {
+            route.push("/onboarding")
+        }
+        else {
+            setPageLoad(false);
+        }
+    }, [user])
     const genders = ["Male", "Female"];
     const [Mobile, setMobile] = useState();
     const [phone, setphone] = useState();
@@ -38,14 +59,7 @@ const Personaldetails = () => {
         phoneLength: 10,
     });
 
-    const [pageLoad, setPageLoad] = useState(false);
-    if (pageLoad) {
-        return (
-            <div className="h-[100vh] flex justify-center items-center">
-                <div className="loader-line" />
-            </div>
-        );
-    }
+
     const validatephone = (phone) => {
         // Destructure phone object
         if (!phone) {
@@ -92,7 +106,7 @@ const Personaldetails = () => {
         console.log(formatteddate);
         setdob(formatteddate);
     };
-    const submit = () => {
+    const submit = async () => {
         const validationResult = validatephone(phone);
         if (validationResult !== true) {
             toast({
@@ -110,7 +124,19 @@ const Personaldetails = () => {
             })
         }
         else {
-            setpopup(true)
+            const data = await sendOtp(phone?.phoneNumber);
+            console.log(data, "read")
+            if (!data.error) {
+                if(data.message.includes("Duplicate -- Phone number")){
+                    toast({ title: "Duplicate Number, number already exists"})
+                }
+                else{
+                    setpopup(true)
+                }
+            }
+            else {
+                toast({ title: data.error })
+            }
         }
     }
     const popupclose = () => {
@@ -119,9 +145,9 @@ const Personaldetails = () => {
     const sendOtpMessage = async () => {
         const token = getToken();
         setloading(true);
-        const userotp = await sendstudentotp(phone?.phoneNumber, token);
+        const userotp = await sendOtp(phone?.phoneNumber);
         setotpcountdownw(!otpcountdownw);
-
+        console.log(userotp, "read");
         if (userotp.error) {
             {
                 console.log(userotp.error, "otp message");
@@ -139,6 +165,14 @@ const Personaldetails = () => {
             setloading(false);
         }
     };
+
+    if (pageLoad) {
+        return (
+            <div className="h-[100vh] flex justify-center items-center">
+                <div className="loader-line" />
+            </div>
+        );
+    }
     return (
         <div onClick={() => { setfocus(null) }} className=" grid grid-cols-1 justify-center lg:grid-cols-5  relative  min-h-[100vh] md:max-h-[100vh]  gap-[3rem] overflow-hidden">
             <div className={clsx("    absolute  top-0 z-[100]")}>
@@ -166,7 +200,8 @@ const Personaldetails = () => {
                             phone={phone?.phoneNumber}
                             sendOtpMessage={sendOtpMessage}
                             otpcountdownw={otpcountdownw}
-                            userclass={"V"}
+                            gender={gender}
+                            dob={dob}
                         />
                     </motion.div>
                 </div>
@@ -335,7 +370,7 @@ const Personaldetails = () => {
                     </div>
                     <div className=" flex flex-col gap-2">
                         <div className="  font-circular font-medium text-[0.95rem]">
-                            Full name
+                            Date Of Birth
                         </div>
                         <div>
                             <DatePicker deadline={dob} dedlinedate={dedlinedate} />
