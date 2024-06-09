@@ -1,7 +1,9 @@
 import Padding from "@/components/padding";
 import Arrowright from "@/public/icons/arrowright";
 import clsx from "clsx";
+import Image from "next/image";
 import React from "react";
+import src from "@/public/images/tube.png";
 
 const Medicalhistory = () => {
   const medicalHistoryData = [
@@ -73,24 +75,134 @@ const Medicalhistory = () => {
           <div className=" font-circular text-[#2F3133] pb-[1.5rem] text-[1.5rem] ">
             Recent health history details of Narayana
           </div>
-          <div className=" bg-white p-[1rem] text-[0.9rem] font-circular rounded-3xl border border-[#E4E4E4] ">
-            <div className=" text-[1.15rem] ">Critical details</div>
+          <div className=" w-full bg-[#FFFFFF] p-[1.5rem] rounded-3xl border-[1px] border-[#E4E4E4]">
+            <div className=" font-circular font-medium text-[1.25rem] pb-[1rem]">
+              Appointment Details:
+            </div>
+            <div className=" grid grid-cols-2 gap-[2rem]">
+              <div>
+                <div className=" text-[#7A7D7F] font-circular text-[0.9rem] font-medium">
+                  Heart rate
+                </div>
+                <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
+                  140 BPM
+                </div>
+              </div>
+              <div>
+                <div className=" text-[#7A7D7F] font-circular text-[0.9rem] font-medium">
+                  Sugar level (before fasting)
+                </div>
+                <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
+                  130
+                </div>
+              </div>
+              <div>
+                <div className=" text-[#7A7D7F] font-circular text-[0.9rem] font-medium">
+                  Sugar level (after fasting)
+                </div>
+                <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
+                  99
+                </div>
+              </div>
+              <div>
+                <div className=" text-[#7A7D7F] font-circular text-[0.9rem] font-medium">
+                  BMI
+                </div>
+                <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
+                  6.7 (Obese)
+                </div>
+              </div>
+            </div>
           </div>
-          <div>
-            <div className=" text-[#7A7D7F] ">Heart rate</div>
-            <div className=" text-[#2F3133] ">140 BPM</div>
+          <div className=" w-full my-10 bg-[#FFFFFF] p-[1.5rem] rounded-3xl border-[1px] border-[#E4E4E4]">
+            <div className=" font-circular font-medium text-[1.25rem] pb-[1rem]">
+              Consultation details
+            </div>
+            <div className=" grid grid-cols-2 gap-[2rem]">
+              <div>
+                <div className=" text-[#7A7D7F] font-circular text-[0.9rem] font-medium">
+                  Doctor
+                </div>
+                <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
+                  Subramaniyam Swamy
+                </div>
+              </div>
+              <div>
+                <div className=" text-[#7A7D7F] font-circular text-[0.9rem] font-medium">
+                  Remark
+                </div>
+                <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
+                  Patient is overweight and is chain smoker, casual drinker.
+                  Recommended to do regular exercises and reduce smoking.
+                </div>
+              </div>
+              <div>
+                <div className=" text-[#7A7D7F] font-circular text-[0.9rem] font-medium">
+                  Hospital
+                </div>
+                <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
+                  Virinchi Hospitals
+                </div>
+              </div>
+              <div>
+                <div className=" text-[#7A7D7F] font-circular text-[0.9rem] font-medium">
+                  Issue
+                </div>
+                <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
+                  Patient had fast heart beat and chest pain.
+                </div>
+              </div>
+            </div>
           </div>
-          <div>
-            <div className=" text-[#7A7D7F] ">Sugar level (before fasting)</div>
-            <div className=" text-[#2F3133] ">130</div>
+          <div className=" w-full my-10 bg-[#FFFFFF] p-[1.5rem] rounded-3xl border-[1px] border-[#E4E4E4]">
+            <div className=" font-circular font-medium text-[1.25rem] pb-[1rem]">
+              Patient habits
+            </div>
+            <div className=" grid grid-cols-4 gap-[2rem]">
+              <div>
+                <div className=" text-[#7A7D7F] font-circular text-[0.9rem] font-medium">
+                  Smoking
+                </div>
+                <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
+                  Heavy smoker
+                </div>
+              </div>
+              <div>
+                <div className=" text-[#7A7D7F] font-circular text-[0.9rem] font-medium">
+                  Drinking
+                </div>
+                <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
+                  Casual Drink
+                </div>
+              </div>
+              <div>
+                <div className=" text-[#7A7D7F] font-circular text-[0.9rem] font-medium">
+                  Physical
+                </div>
+                <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
+                  No exercises & Inactive
+                </div>
+              </div>
+              <div>
+                <div className=" text-[#7A7D7F] font-circular text-[0.9rem] font-medium">
+                  Diet preference
+                </div>
+                <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
+                  Non-veg
+                </div>
+              </div>
+            </div>
           </div>
-          <div>
-            <div className=" text-[#7A7D7F] ">Sugar level (after fasting)</div>
-            <div className=" text-[#2F3133] ">99</div>
-          </div>
-          <div>
-            <div className=" text-[#7A7D7F] ">BMI</div>
-            <div className=" text-[#2F3133] ">6.7 (Obese)</div>
+          <div className=" w-full my-10 bg-[#FFFFFF] p-[1.5rem] rounded-3xl border-[1px] border-[#E4E4E4]">
+            <div className=" font-circular font-medium text-[1.25rem] pb-[1rem]">
+              Attachments & Reports
+            </div>
+            <div className=" flex gap-4 ">
+              <Image className=" w-[45px] h-[50px] " src={src} />
+              <Image className=" w-[45px] h-[50px] " src={src} />
+              <Image className=" w-[45px] h-[50px] " src={src} />
+              <Image className=" w-[45px] h-[50px] " src={src} />
+            </div>
           </div>
         </div>
       </Padding>
