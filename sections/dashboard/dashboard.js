@@ -13,29 +13,35 @@ import calculateCountdown from "@/utils/calculateCountdown";
 const Dashboard = () => {
   const [countdown, setCountdown] = useState();
   const [data, setdata] = useState();
+  const [isappointment, setisappointment] = useState(false);
+  const [loading, setloading] = useState(true);
+  const [points, setpoints] = useState(5);
 
   useEffect(() => {
     const token = getToken();
     const getData = async () => {
       const data = await GetDAshData(token);
+      if (data.lastSlot) {
+        setdata(data);
+        setpoints(data.number);
+      }
       console.log(data);
     };
-    getData;
+    getData();
   }, []);
 
   useEffect(() => {
-    if (data) {
+    if (data && data.lastSlot && data.lastSlot.status == false) {
+      console.log(countdown, "ccccccccc");
       const interval = setInterval(() => {
-        setCountdown(
-          calculateCountdown()
-          // freetraildetails?.day,
-          // convertToUserLocalTime(freetraildetails?.start_time)
-        );
+        setCountdown(calculateCountdown(data.lastSlot.slot.start_time));
+        setloading(false);
       }, 1000);
+      setisappointment(true);
+      // console.log();
       return () => clearInterval(interval);
     }
-  }, []);
-  const [points, setpoints] = useState(5);
+  }, [data]);
   const ref = useRef();
   const copyToClipboard = () => {
     console.log(ref.current.textContent);
@@ -69,19 +75,72 @@ const Dashboard = () => {
       notes: "Minor inflammation",
       reportDate: "2024-06-05",
     },
+    {
+      from: "Dr. Michael Brown",
+      testName: "MRI",
+      notes: "Minor inflammation",
+      reportDate: "2024-06-05",
+    },
+    {
+      from: "Dr. Michael Brown",
+      testName: "MRI",
+      notes: "Minor inflammation",
+      reportDate: "2024-06-05",
+    },
+    {
+      from: "Dr. Michael Brown",
+      testName: "MRI",
+      notes: "Minor inflammation",
+      reportDate: "2024-06-05",
+    },
+    {
+      from: "Dr. Michael Brown",
+      testName: "MRI",
+      notes: "Minor inflammation",
+      reportDate: "2024-06-05",
+    },
   ];
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+
+    // Options for the date format
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+
+    return date.toLocaleDateString("en-US", options);
+  }
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-[100vh] ">
+        <div className=" loader-line "></div>
+      </div>
+    );
+  }
 
   return (
     <div>
       <Padding>
-        <div className=" bg-[#1D55E5] mt-5 px-[3rem] py-8 pt-12 rounded-3xl ">
+        <div
+          className={clsx(
+            " bg-[#1D55E5] mt-5 px-[3rem] py-8 pt-12 rounded-3xl ",
+            isappointment ? "" : "hidden"
+          )}
+        >
           <div className=" text-[5rem] pb-20 text-white leading-[5rem] md:max-w-[600px] font-thunder font-bold ">
             YOU HAVE AN UPCOMING APPOINTMENT
           </div>
           <div>
             <div>
               <div className=" text-[#BBD8FA] py-5 font-circular ">
-                On <span className=" text-white ">Thursday, May 17, 2024</span>
+                On{" "}
+                <span className=" text-white ">
+                  {formatDate(data.lastSlot.date)}
+                </span>
               </div>
             </div>
             <div className=" flex justify-between w-full items-end ">
@@ -95,7 +154,7 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className=" text-white bg-[#1847C0] font-circular py-2 px-5 w-max rounded-full ">
-                2 Days : 09 Hours : 30 Seconds
+                {countdown}
               </div>
             </div>
           </div>
@@ -149,7 +208,7 @@ const Dashboard = () => {
                 <div>Notes</div>
                 <div>Report Date</div>
               </div>
-              {recentReports.map((report, index) => (
+              {data.reportHistory.map((report, index) => (
                 <div
                   key={index}
                   className={clsx(
@@ -159,10 +218,12 @@ const Dashboard = () => {
                       : "border-[#E2E7ED] border-b "
                   )}
                 >
-                  <div className=" text-[#26282B] ">{report.from}</div>
-                  <div>{report.testName}</div>
-                  <div>{report.notes}</div>
-                  <div>{report.reportDate}</div>
+                  <div className=" text-[#26282B] ">
+                    {recentReports[index].from}
+                  </div>
+                  <div>{report.title}</div>
+                  <div>{recentReports[index].notes}</div>
+                  <div>{recentReports[index].reportDate}</div>
                 </div>
               ))}
             </div>
@@ -172,54 +233,23 @@ const Dashboard = () => {
               Health History
             </div>
             <div className=" grid grid-cols-3  ">
-              <div className=" flex flex-col gap-1.5 font-circular">
-                <div className=" text-[#3F4144] text-[0.95rem] ">
-                  24, May 2024
+              {data.history.slice(0, 3).map((data, idx) => (
+                <div className=" flex flex-col gap-1.5 font-circular">
+                  <div className=" text-[#3F4144] text-[0.95rem] ">
+                    {formatDate(data.date)}
+                  </div>
+                  <div className=" flex items-center ">
+                    <div className=" w-4 h-4 rounded-full bg-[#D9D9D9] " />
+                    <div className=" w-full bg-[#D9D9D9] h-[1px] "></div>
+                  </div>
+                  <div className=" pt-3 pr-4 text-[#2F3133] text-[0.95rem] ">
+                    {data.Issue}
+                  </div>
+                  <div className=" text-[#90959B] pr-4 text-[0.9rem] ">
+                    {data.description}
+                  </div>
                 </div>
-                <div className=" flex items-center ">
-                  <div className=" w-4 h-4 rounded-full bg-[#D9D9D9] " />
-                  <div className=" w-full bg-[#D9D9D9] h-[1px] "></div>
-                </div>
-                <div className=" pt-3 pr-4 text-[#2F3133] text-[0.95rem] ">
-                  Cardiac Arrest
-                </div>
-                <div className=" text-[#90959B] pr-4 text-[0.9rem] ">
-                  Had high cholesterol leading to artery blockage and Cardiac
-                  arrest
-                </div>
-              </div>
-              <div className="  flex flex-col gap-1.5  font-circular">
-                <div className=" text-[#3F4144] text-[0.95rem] ">
-                  24, May 2024
-                </div>
-                <div className=" flex items-center ">
-                  <div className=" w-4 h-4 rounded-full bg-[#D9D9D9] " />
-                  <div className=" w-full bg-[#D9D9D9] h-[1px] "></div>
-                </div>
-                <div className="  pt-3 text-[#2F3133] text-[0.95rem] ">
-                  Cardiac Arrest
-                </div>
-                <div className=" text-[#90959B] pr-4 text-[0.9rem] ">
-                  Had high cholesterol leading to artery blockage and Cardiac
-                  arrest
-                </div>
-              </div>
-              <div className="  flex flex-col gap-1.5  font-circular">
-                <div className=" text-[#3F4144] text-[0.95rem] ">
-                  24, May 2024
-                </div>
-                <div className=" flex items-center ">
-                  <div className=" w-4 h-4 rounded-full bg-[#D9D9D9] " />
-                  <div className=" w-full bg-[#D9D9D9] h-[1px] "></div>
-                </div>
-                <div className="  pt-3 text-[#2F3133] text-[0.95rem] ">
-                  Cardiac Arrest
-                </div>
-                <div className=" text-[#90959B] text-[0.9rem] ">
-                  Had high cholesterol leading to artery blockage and Cardiac
-                  arrest
-                </div>
-              </div>
+              ))}
             </div>
           </div>
           <div className="bg-[#F7F7F7] px-[2rem] py-6 rounded-3xl border border-[#F2F2F2]">
@@ -231,7 +261,7 @@ const Dashboard = () => {
                 ref={ref}
                 className=" font-thunder text-[7rem] leading-[7rem] pb-4 uppercase font-bold "
               >
-                SN7326hhsh5
+                {data.insurancesHistory.insuranceNumber}
               </div>
               <div
                 className=" cursor-pointer "
@@ -251,7 +281,8 @@ const Dashboard = () => {
               <div className=" font-circular font-medium text-[0.9rem] ">
                 <div className=" text-[#868A91] ">Limit</div>
                 <div className=" text-[#26282B] text-[0.95rem] ">
-                  Rs: 10,000,00/10,000,00
+                  Rs: {data.insurancesHistory.remainingLimit}/
+                  {data.insurancesHistory.limit}
                 </div>
                 <div className=" text-[#868A91] ">Available</div>
               </div>

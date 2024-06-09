@@ -1,19 +1,17 @@
 import axiosInstance from "./axiosinstance";
-const getuser = async (token) => {
+const Gettimeline = async (token) => {
   const headers = {
     authorization: `Bearer ${token}`,
   };
   try {
-    const response = await axiosInstance.get("/patient/get", {
+    const response = await axiosInstance.get("patient/getalltests", {
       headers,
     });
 
     return response.data;
   } catch (error) {
     console.log(error);
-    localStorage.removeItem("token");
-    window.location.href = "/login";
     return null;
   }
 };
-export default getuser;
+export default Gettimeline;

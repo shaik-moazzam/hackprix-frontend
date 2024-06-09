@@ -1,11 +1,29 @@
+"use client";
 import Padding from "@/components/padding";
 import Arrowright from "@/public/icons/arrowright";
 import clsx from "clsx";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import src from "@/public/images/tube.png";
+import Gettimeline from "@/api/medicaltimeline";
+import { getToken } from "@/api/getToken";
 
 const Medicalhistory = () => {
+  const [data, setdata] = useState();
+  const [loading, setloading] = useState(true);
+  useEffect(() => {
+    const getData = async () => {
+      const token = getToken();
+      const data = await Gettimeline(token);
+      if (data) {
+        console.log(data);
+        setdata(data);
+        setloading(false);
+      }
+    };
+    getData();
+  }, []);
+
   const medicalHistoryData = [
     {
       date: "24, May 2024",
@@ -34,12 +52,33 @@ const Medicalhistory = () => {
       description: "Fractured right arm in a skiing accident",
     },
   ];
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+
+    // Options for the date format
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+
+    return date.toLocaleDateString("en-US", options);
+  }
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-[100vh] ">
+        <div className=" loader-line "></div>
+      </div>
+    );
+  }
 
   return (
     <div className=" py-12 ">
       <Padding className={" flex gap-5 "}>
         <div className=" w-[35%] h-max ">
-          {medicalHistoryData.map((item, index) => (
+          {data.map((item, index) => (
             <div key={index} className="flex gap-4">
               <div className="flex relative flex-col items-center">
                 <div
@@ -56,12 +95,14 @@ const Medicalhistory = () => {
                   index + 1 == medicalHistoryData.length ? "" : "pb-20"
                 )}
               >
-                <div className="text-[#6C6E71] text-[0.95rem]">{item.date}</div>
+                <div className="text-[#6C6E71] text-[0.95rem]">
+                  {formatDate(item.date)}
+                </div>
                 <div className="pt-1 pr-4 text-[#2F3133] text-[1rem]">
                   {item.title}
                 </div>
                 <div className="text-[#90959B] max-w-[260px] pr-4 text-[0.9rem]">
-                  {item.description}
+                  {item.Remark}
                 </div>
                 <div className="flex gap-2 items-center text-[#52C509] pt-2">
                   View details
