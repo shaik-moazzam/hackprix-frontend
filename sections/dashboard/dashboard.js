@@ -1,13 +1,40 @@
 "use client";
 import Padding from "@/components/padding";
 import Image from "next/image";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import src from "@/public/images/profile.png";
 import clsx from "clsx";
 import Copy from "@/public/icons/copy";
 import { toast } from "@/components/ui/use-toast";
+import { getToken } from "@/api/getToken";
+import GetDAshData from "@/api/dashboardhit";
+import calculateCountdown from "@/utils/calculateCountdown";
 
 const Dashboard = () => {
+  const [countdown, setCountdown] = useState();
+  const [data, setdata] = useState();
+
+  useEffect(() => {
+    const token = getToken();
+    const getData = async () => {
+      const data = await GetDAshData(token);
+      console.log(data);
+    };
+    getData;
+  }, []);
+
+  useEffect(() => {
+    if (data) {
+      const interval = setInterval(() => {
+        setCountdown(
+          calculateCountdown()
+          // freetraildetails?.day,
+          // convertToUserLocalTime(freetraildetails?.start_time)
+        );
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, []);
   const [points, setpoints] = useState(5);
   const ref = useRef();
   const copyToClipboard = () => {
