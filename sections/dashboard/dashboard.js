@@ -40,12 +40,12 @@ const Dashboard = () => {
       console.log(countdown, "ccccccccc");
       const interval = setInterval(() => {
         setCountdown(calculateCountdown(data.lastSlot.slot.start_time));
-        setloading(false);
       }, 1000);
       setisappointment(true);
       // console.log();
       return () => clearInterval(interval);
     }
+    setloading(false);
   }, [data]);
   const ref = useRef();
   const copyToClipboard = () => {
@@ -139,7 +139,7 @@ const Dashboard = () => {
   return (
     <div>
       <Padding>
-        <div
+        {!isappointment && <div
           className={clsx(
             " bg-[#1D55E5] mt-5 px-[3rem] py-8 pt-12 rounded-3xl ",
             isappointment ? "" : "hidden"
@@ -153,7 +153,7 @@ const Dashboard = () => {
               <div className=" text-[#BBD8FA] py-5 font-circular ">
                 On{" "}
                 <span className=" text-white ">
-                  {formatDate(data.lastSlot.date)}
+                  {formatDate(data?.lastSlot?.date)}
                 </span>
               </div>
             </div>
@@ -161,7 +161,7 @@ const Dashboard = () => {
               <div className=" bg-[#1847C0] font-circular rounded-full flex gap-3 p-3 pr-6 w-max ">
                 <Image className=" w-[3rem] " src={src} />
                 <div>
-                  <div className=" text-white ">{data.lastSlot.slot.doctor.name}</div>
+                  <div className=" text-white ">{data?.lastSlot?.slot?.doctor?.name}</div>
                   <div className=" text-[#8FAAF1] text-[0.9rem] ">
                     Cardiologist
                   </div>
@@ -172,7 +172,7 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div>}
         <div className=" grid gap-8 py-10 grid-cols-2 ">
           <div className=" bg-[#F7F7F7] px-[2rem] py-6 rounded-3xl border border-[#F2F2F2] ">
             <div className=" font-circular text-[1.25rem] pb-10">
@@ -222,12 +222,12 @@ const Dashboard = () => {
                 <div>Notes</div>
                 <div>Report Date</div>
               </div>
-              {data.reportHistory.slice(0, 4).map((report, index) => (
+              {data?.reportHistory?.slice(0, 4).map((report, index) => (
                 <div
                   key={index}
                   className={clsx(
                     " py-3 grid grid-cols-4 text-[#90959B] font-circular px-[1rem]",
-                    index + 1 == recentReports.length
+                    index + 1 == recentReports?.length
                       ? ""
                       : "border-[#E2E7ED] border-b "
                   )}
@@ -247,20 +247,20 @@ const Dashboard = () => {
               Health History
             </div>
             <div className=" grid grid-cols-3  ">
-              {data.history.slice(0, 3).map((data, idx) => (
+              {data?.history?.slice(0, 3).map((data, idx) => (
                 <div className=" flex flex-col gap-1.5 font-circular">
                   <div className=" text-[#3F4144] text-[0.95rem] ">
-                    {formatDate(data.date)}
+                    {formatDate(data?.date)}
                   </div>
                   <div className=" flex items-center ">
                     <div className=" w-4 h-4 rounded-full bg-[#D9D9D9] " />
                     <div className=" w-full bg-[#D9D9D9] h-[1px] "></div>
                   </div>
                   <div className=" pt-3 pr-4 text-[#2F3133] text-[0.95rem] ">
-                    {data.Issue}
+                    {data?.Issue}
                   </div>
                   <div className=" text-[#90959B] pr-4 text-[0.9rem] ">
-                    {data.description}
+                    {data?.description}
                   </div>
                 </div>
               ))}
@@ -275,7 +275,7 @@ const Dashboard = () => {
                 ref={ref}
                 className=" font-thunder text-[7rem] leading-[7rem] pb-4 uppercase font-bold "
               >
-                {data.insurancesHistory.insuranceNumber}
+                {data?.insurancesHistory?.insuranceNumber}
               </div>
               <div
                 className=" cursor-pointer "
@@ -295,8 +295,8 @@ const Dashboard = () => {
               <div className=" font-circular font-medium text-[0.9rem] ">
                 <div className=" text-[#868A91] ">Limit</div>
                 <div className=" text-[#26282B] text-[0.95rem] ">
-                  Rs: {data.insurancesHistory.remainingLimit}/
-                  {data.insurancesHistory.limit}
+                  Rs: {data?.insurancesHistory?.remainingLimit}/
+                  {data?.insurancesHistory?.limit}
                 </div>
                 <div className=" text-[#868A91] ">Available</div>
               </div>
