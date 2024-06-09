@@ -69,11 +69,13 @@ const Appointments = () => {
                         </div>
                     </div>
                     <div>
+                        <Link href={"/dashboard/appointments/bookanappointment"}>
 
-                        <Button
-                            text={"Book an appointment"}
-                            className={" bg-[#9FE870] text-[#000000]"}
-                        />
+                            <Button
+                                text={"Book an appointment"}
+                                className={" bg-[#9FE870] text-[#000000]"}
+                            />
+                        </Link>
                     </div>
                 </div>
                 {
