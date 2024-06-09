@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Padding from "./padding";
 import clsx from "clsx";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const Dashboardnavbar = () => {
   const [isactive, setactive] = useState(0);
@@ -43,21 +44,24 @@ const Dashboardnavbar = () => {
               ></motion.div>
             )}
           </div>
-          <div
-            onClick={() => setactive(2)}
-            className={clsx(
-              " pb-2 translate-y-[1px] relative cursor-pointer duration-300 ",
-              isactive == 2 ? "text-[#52C509]   " : "text-[#60636C] "
-            )}
-          >
-            Appointments
-            {isactive == 2 && (
-              <motion.div
-                layoutId="tabs"
-                className=" absolute h-[1px] w-full bottom-0 bg-[#52C509] "
-              ></motion.div>
-            )}
-          </div>
+          <Link href={"/dashboard/appointments"}>
+
+            <div
+              onClick={() => setactive(2)}
+              className={clsx(
+                " pb-2 translate-y-[1px] relative cursor-pointer duration-300 ",
+                isactive == 2 ? "text-[#52C509]   " : "text-[#60636C] "
+              )}
+            >
+              Appointments
+              {isactive == 2 && (
+                <motion.div
+                  layoutId="tabs"
+                  className=" absolute h-[1px] w-full bottom-0 bg-[#52C509] "
+                ></motion.div>
+              )}
+            </div>
+          </Link>
           <div
             onClick={() => setactive(3)}
             className={clsx(
