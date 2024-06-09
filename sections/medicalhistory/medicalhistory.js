@@ -24,7 +24,7 @@ const Medicalhistory = () => {
       if (data) {
         console.log(data);
         setdata(data);
-        setcriticaldetails(data[0]);
+        setcriticaldetails(data.slice().reverse()[0]);
         setloading(false);
       }
     };
@@ -73,7 +73,7 @@ const Medicalhistory = () => {
     return date.toLocaleDateString("en-US", options);
   }
   const update = (index) => {
-    setcriticaldetails(data[index]);
+    setcriticaldetails(data.slice().reverse()[index]);
   };
 
   if (loading) {
@@ -88,42 +88,45 @@ const Medicalhistory = () => {
     <div className=" py-12 ">
       <Padding className={" flex gap-5 "}>
         <div className=" w-[35%] h-max ">
-          {data.map((item, index) => (
-            <div key={index} className="flex gap-4">
-              <div className="flex relative flex-col items-center">
+          {data
+            .slice()
+            .reverse()
+            .map((item, index) => (
+              <div key={index} className="flex gap-4">
+                <div className="flex relative flex-col items-center">
+                  <div
+                    className={clsx(
+                      "w-4 h-4 rounded-full bg-[#D9D9D9]",
+                      index == 0 ? "" : " translate-y-9 "
+                    )}
+                  />
+                  <div className="h-full absolute  bg-[#D9D9D9] w-[1px]"></div>
+                </div>
                 <div
                   className={clsx(
-                    "w-4 h-4 rounded-full bg-[#D9D9D9]",
-                    index == 0 ? "" : " translate-y-9 "
+                    "flex flex-col  gap-1.5 font-circular",
+                    index + 1 == medicalHistoryData.length ? "" : "pb-20"
                   )}
-                />
-                <div className="h-full absolute  bg-[#D9D9D9] w-[1px]"></div>
-              </div>
-              <div
-                className={clsx(
-                  "flex flex-col  gap-1.5 font-circular",
-                  index + 1 == medicalHistoryData.length ? "" : "pb-20"
-                )}
-              >
-                <div className="text-[#6C6E71] text-[0.95rem]">
-                  {formatDate(item.date)}
-                </div>
-                <div className="pt-1 pr-4 text-[#2F3133] text-[1rem]">
-                  {item.Issue}
-                </div>
-                <div className="text-[#90959B] max-w-[260px] pr-4 text-[0.9rem]">
-                  {item.Remark}
-                </div>
-                <div
-                  className="flex gap-2 cursor-pointer items-center text-[#52C509] pt-2"
-                  onClick={() => update(index)}
                 >
-                  View details
-                  <Arrowright h={20} color={"#52C509"} />
+                  <div className="text-[#6C6E71] text-[0.95rem]">
+                    {formatDate(item.date)}
+                  </div>
+                  <div className="pt-1 pr-4 text-[#2F3133] text-[1rem]">
+                    {item.Issue}
+                  </div>
+                  <div className="text-[#90959B] max-w-[260px] pr-4 text-[0.9rem]">
+                    {item.Remark}
+                  </div>
+                  <div
+                    className="flex gap-2 cursor-pointer items-center text-[#52C509] pt-2"
+                    onClick={() => update(index)}
+                  >
+                    View details
+                    <Arrowright h={20} color={"#52C509"} />
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
         <div className=" w-[65%] h-full bg-[#F7F7F7] px-[2rem] rounded-3xl py-[1.5rem] ">
           <div className=" font-circular text-[#2F3133] pb-[1.5rem] text-[1.5rem] ">
@@ -167,14 +170,16 @@ const Medicalhistory = () => {
                   {criticaldetails.Remark}
                 </div>
               </div>
-              {criticaldetails.hospital && <div>
-                <div className=" text-[#7A7D7F] font-circular text-[0.9rem] font-medium">
-                  Hospital
+              {criticaldetails.hospital && (
+                <div>
+                  <div className=" text-[#7A7D7F] font-circular text-[0.9rem] font-medium">
+                    Hospital
+                  </div>
+                  <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
+                    {criticaldetails.hospital}
+                  </div>
                 </div>
-                <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
-                  {criticaldetails.hospital}
-                </div>
-              </div>}
+              )}
 
               <div>
                 <div className=" text-[#7A7D7F] font-circular text-[0.9rem] font-medium">
@@ -196,7 +201,7 @@ const Medicalhistory = () => {
                   Smoking
                 </div>
                 <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
-                  {user.smoking}
+                  {user?.smoking}
                 </div>
               </div>
               <div>
@@ -225,19 +230,20 @@ const Medicalhistory = () => {
               </div>
             </div>
           </div>
-          {criticaldetails.docs.length > 0 && <div className=" w-full my-10 bg-[#FFFFFF] p-[1.5rem] rounded-3xl border-[1px] border-[#E4E4E4]">
-            <div className=" font-circular font-medium text-[1.25rem] pb-[1rem]">
-              Attachments & Reports
+          {criticaldetails.docs.length > 0 && (
+            <div className=" w-full my-10 bg-[#FFFFFF] p-[1.5rem] rounded-3xl border-[1px] border-[#E4E4E4]">
+              <div className=" font-circular font-medium text-[1.25rem] pb-[1rem]">
+                Attachments & Reports
+              </div>
+              <div className=" flex gap-4 ">
+                {criticaldetails.docs.map((data) => (
+                  <Link target="blank" href={IMGBASE_URL + data.url}>
+                    <Image className=" w-[45px] h-[50px] " src={src} />
+                  </Link>
+                ))}
+              </div>
             </div>
-            <div className=" flex gap-4 ">
-              {criticaldetails.docs.map((data) => (
-                <Link target="blank" href={IMGBASE_URL + data.url}>
-                  <Image className=" w-[45px] h-[50px] " src={src} />
-                </Link>
-              ))}
-            </div>
-          </div>}
-
+          )}
         </div>
       </Padding>
     </div>

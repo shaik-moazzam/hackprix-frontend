@@ -148,16 +148,24 @@ const Medicaltest = () => {
     );
   }
   const submit = async () => {
+    setloading(true);
     if (testname && selectedlabid && dob && starttime) {
-
       const bookTests1 = await bookTests(testname, selectedlabid, dob, starttime)
+      console.log(bookTests1);
+      if (bookTests1.error) {
+        toast({ title: bookTests1.error })
+      }
+      else {
+        setpop(false);
+        window.location.reload();
+      }
     }
     else {
       toast({
         title: "Please fill all the fields",
-
       })
     }
+    setloading(false);
   }
   const dedlinedate = (dd) => {
     const date = new Date(dd);
@@ -396,7 +404,7 @@ const Medicaltest = () => {
                 <div className=" w-[20%] ">Test-code</div>
                 <div className=" w-[25%] ">Biological name</div>
                 <div className=" w-[15%] ">Price</div>
-
+                <div className=" w-[20%] " />
               </div>
               {testData.map((item, index) => (
                 <div
@@ -455,8 +463,8 @@ const Medicaltest = () => {
                     </div>
                   </div>
                   <div className="w-[15%]">{item.testId}</div>
-                  <div className="w-[25%]">{item.biologicalname}</div>
-                  <div className="w-[15%]">Rs:{item.price}</div>
+                  <div className="w-[25%]">{testData[index].description}</div>
+                  <div className="w-[15%]">{testData[index].price}</div>
                   <div className="w-[20%]">
                     <Link href={`/dashboard/medicaltest/details?id=${item._id}`}>
                       <Button
