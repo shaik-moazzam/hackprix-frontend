@@ -10,7 +10,7 @@ import { toast } from '@/components/ui/use-toast';
 import { useUser } from '@/redux/userContext';
 
 const Doctorschedule = () => {
-    const {state} = useUser();
+    const { state } = useUser();
     const user = state.user;
     const param = useSearchParams();
     const id = param.get("id")
@@ -18,6 +18,7 @@ const Doctorschedule = () => {
     const picRef = useRef(null);
     const map = [];
     const [pageLoad, setPageLoad] = useState(true);
+    const [bookload, setbookload] = useState(false);
 
     const handleScroll = () => {
         if (!scrollContainerRef.current || !picRef.current) {
@@ -34,7 +35,7 @@ const Doctorschedule = () => {
     const [hoursArray, sethoursArray] = useState();
     const [daysArray, setdaysArray] = useState();
     const [data1, setdata1] = useState();
-    
+
     function getDayFromDate(dateString) {
         // Split the date string into year, day, and month components
         const [year, day, month] = dateString.split('-');
@@ -186,11 +187,11 @@ const Doctorschedule = () => {
             } catch (error) {
                 console.error("Error fetching student schedule:", error);
             } finally {
-
+                setPageLoad(false);
             }
         };
         dt();
-        setPageLoad(false);
+
     }, [id]);
 
 
@@ -234,16 +235,18 @@ const Doctorschedule = () => {
         return hoursArray?.indexOf(time) + 1;
     };
 
-    const slotBooked = async(scheduleData) => {
-        const data = await bookSlot( scheduleData.slotId, scheduleData.date);
+    const slotBooked = async (scheduleData) => {
+        setbookload(true)
+        const data = await bookSlot(scheduleData.slotId, scheduleData.date);
         console.log(data, "read");
-        if(data.error){
-            toast({ title: "Something went wrong "});
+        if (data.error) {
+            toast({ title: "Something went wrong " });
         }
-        else{
-            toast({ title: "Slot have been booked "});
+        else {
+            toast({ title: "Slot have been booked " });
             window.location.reload();
         }
+        setbookload(false)
     }
 
 
@@ -257,7 +260,7 @@ const Doctorschedule = () => {
 
     return (
 
-        <div className=''>
+        <div className={pageLoad ? " hidden" : ""}>
             <Padding>
                 <div className=' border-[#E2E4E8] relative  border-[1px]  bg-white rounded-3xl'>
 
@@ -370,7 +373,7 @@ const Doctorschedule = () => {
 
                                                 </div>
                                                 <div onClick={() => slotBooked(scheduleData)} className={clsx(' w-[100%] h-[100%] flex justify-center items-center ', !scheduleData.busy ? "" : "hidden")}>
-                                                    <Button text={"Book now"} className={" border-[1px] border-[#000]"} />
+                                                    <Button wfull={" w-[120px]"} text={bookload ? <div className='loader1' /> : "Book now"} className={" border-[1px] border-[#000]"} />
                                                 </div>
 
                                             </div>

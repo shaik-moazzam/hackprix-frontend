@@ -55,15 +55,18 @@ const Navbar = () => {
       <Padding className={""}>
         <div className=" flex justify-between items-center">
           <div className=" flex gap-10 items-center">
-            <Logo
-              color={
-                params.includes("usecase1")
-                  ? "#fff"
-                  : params.includes("usecase3")
-                    ? " #fff"
-                    : "#000000"
-              }
-            />
+            <Link href={"/"}  >
+
+              <Logo
+                color={
+                  params.includes("usecase1")
+                    ? "#fff"
+                    : params.includes("usecase3")
+                      ? " #fff"
+                      : "#000000"
+                }
+              />
+            </Link>
             <div
               className={clsx(
                 "   gap-[1rem]     hidden lg:flex   font-circular font-[450] text-[0.95rem] ",
