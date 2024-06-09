@@ -32,8 +32,16 @@ const Dashboardnavbar = () => {
   return (
     <div className=" py-2">
       <div>
-        <div className=" px-[3rem] font-circular text-[1.25rem] py-2 pb-10 ">
-          Healthyme
+        <div className="flex justify-between">
+          <div className=" px-[3rem] font-circular text-[1.25rem] py-2 pb-10 ">
+            Healthyme
+          </div>
+          <div onClick={() => {
+            localStorage.removeItem("token")
+            route.push("/login")
+          }} className="text-red-500 py-2 px-4 h-max w-max border-[1px] cursor-pointer hover:text-white hover:bg-red-500 font-circular border-red-500 rounded-full mx-6 my-2">
+            Logout
+          </div>
         </div>
         <div className=" px-[3rem]  font-circular border-b border-b-[#DCE2EE] text-[#60636C] flex gap-14 ">
           <Link href={"/dashboard"}>
