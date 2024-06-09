@@ -38,7 +38,7 @@ const Login = () => {
     } else {
       if (user) {
         console.log(user);
-        if (!user.phone || !user.class) {
+        if (!user.phone ) {
           router.push("/verification");
         } else {
           router.push("/dashboard");

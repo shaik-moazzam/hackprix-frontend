@@ -6,7 +6,7 @@ const login1 = async (email, password) => {
     password: password,
   };
   try {
-    const response = await axiosInstance.post("/student/login", requestData);
+    const response = await axiosInstance.post("/patient/login", requestData);
     localStorage.setItem("token", response.data.token + BACK_KEY);
 
     return response.data;
