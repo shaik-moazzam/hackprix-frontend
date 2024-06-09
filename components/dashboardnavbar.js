@@ -14,21 +14,24 @@ const Dashboardnavbar = () => {
           Healthyme
         </div>
         <div className=" px-[3rem]  font-circular border-b border-b-[#DCE2EE] text-[#60636C] flex gap-14 ">
-          <div
-            onClick={() => setactive(0)}
-            className={clsx(
-              " pb-2 translate-y-[1px] cursor-pointer duration-300 relative ",
-              isactive == 0 ? "text-[#52C509]   " : "text-[#60636C] "
-            )}
-          >
-            Overview
-            {isactive == 0 && (
-              <motion.div
-                layoutId="tabs"
-                className=" absolute h-[1px] w-full bottom-0 bg-[#52C509] "
-              ></motion.div>
-            )}
-          </div>
+          <Link href={"/dashboard"}>
+
+            <div
+              onClick={() => setactive(0)}
+              className={clsx(
+                " pb-2 translate-y-[1px] cursor-pointer duration-300 relative ",
+                isactive == 0 ? "text-[#52C509]   " : "text-[#60636C] "
+              )}
+            >
+              Overview
+              {isactive == 0 && (
+                <motion.div
+                  layoutId="tabs"
+                  className=" absolute h-[1px] w-full bottom-0 bg-[#52C509] "
+                ></motion.div>
+              )}
+            </div>
+          </Link>
           <Link href={"/dashboard/medicalhistory"}>
             <div
               className={clsx(
@@ -121,7 +124,7 @@ const Dashboardnavbar = () => {
               isactive == 6 ? "text-[#62C509]   " : "text-[#60636C] "
             )}
           >
-            Healthyme AI
+            Crowdfunding
             {isactive == 6 && (
               <motion.div
                 layoutId="tabs"
