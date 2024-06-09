@@ -38,9 +38,13 @@ const Login = () => {
     } else {
       if (user) {
         console.log(user);
-        if (!user.phone ) {
-          router.push("/verification");
-        } else {
+        if (!user.phone) {
+          router.push("/personaldetails");
+        } 
+        else if (!user.alchohol || !user.diet || !user.smoking || !user.exercise || !user.no_of_meals) {
+          router.push("/onboarding");
+        }
+        else {
           router.push("/dashboard");
         }
       } else {
@@ -148,7 +152,7 @@ const Login = () => {
         } else {
           dispatch({ type: "SET_USER", payload: user });
           setPageLoad(true);
-          router("/dashboard");
+          router("/personalDetails");
         }
       } catch (error) {
         if (error.message) {

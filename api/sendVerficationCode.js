@@ -5,7 +5,7 @@ const sendVerificationCode = async (email) => {
   };
   try {
     const response = await axiosInstance.post(
-      "/student/sendVerification",
+      "/patient/sendVerification",
       requestData
     );
     return response.data;
