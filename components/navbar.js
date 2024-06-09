@@ -140,19 +140,22 @@ const Navbar = () => {
               </div>
             </Link>
             <div>
-              <Button
-                text={"Get started"}
-                className={clsx(
-                  "  text-[#000000]",
-                  params.includes("usecase1")
-                    ? " bg-[#fff]"
-                    : params.includes("usecase2")
+              <Link href={"/signup"}>
+
+                <Button
+                  text={"Get started"}
+                  className={clsx(
+                    "  text-[#000000]",
+                    params.includes("usecase1")
                       ? " bg-[#fff]"
-                      : params.includes("usecase3")
+                      : params.includes("usecase2")
                         ? " bg-[#fff]"
-                        : "bg-[#9FE870]"
-                )}
-              />
+                        : params.includes("usecase3")
+                          ? " bg-[#fff]"
+                          : "bg-[#9FE870]"
+                  )}
+                />
+              </Link>
             </div>
           </div>
         </div>

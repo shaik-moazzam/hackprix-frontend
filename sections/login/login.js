@@ -180,14 +180,14 @@ const Login = () => {
     );
   }
   return (
-    <div className=" grid grid-cols-1 justify-center lg:grid-cols-5  relative  min-h-[100vh] md:max-h-[100vh]  gap-[3rem] overflow-hidden">
+    <div className=" grid grid-cols-1 justify-center lg:grid-cols-6  relative  min-h-[100vh] md:max-h-[100vh]  gap-[3rem] overflow-hidden">
       <div className=" absolute hidden lg:flex left-[1rem] md:left-[2rem] lg:left-[2rem] top-[2rem]  z-20">
         <Link href={"/"}>
           {/* <Zainii /> */}
           <Logo />
         </Link>
       </div>
-      <div className=" h-full hidden lg:block col-span-2  w-full">
+      <div className=" h-full hidden bg-[#F5F5F5] lg:block col-span-3  w-full">
         <Image
           className=" h-full w-[70%] object-contain mx-auto "
           src={People1}
