@@ -109,7 +109,7 @@ const Dashboardnavbar = () => {
             </div>
           </Link>
 
-          <div
+          {/* <div
             onClick={() => setactive(4)}
             className={clsx(
               " pb-2 translate-y-[1px] relative cursor-pointer duration-300 ",
@@ -137,8 +137,8 @@ const Dashboardnavbar = () => {
                 layoutId="tabs"
                 className=" absolute h-[1px] w-full bottom-0 bg-[#52C509] "
               ></motion.div>
-            )}
-          </div>
+            )} */}
+          {/* </div> */}
           <Link href={"/dashboard/crowdfunding"}>
 
             <div

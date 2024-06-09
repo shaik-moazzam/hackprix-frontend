@@ -120,7 +120,7 @@ const Dashboard = () => {
   }
 
   const joinMeet = async () => {
-    const data2 = await joinMeeting(data.lastSlot.slot.slotId);
+    const data2 = await joinMeeting("66649721128e17afe0a3062c");
     if (data2.toLowerCase().includes("internal server error")) {
       toast({ title: "Something went wrong, please try again later" });
     } else {
@@ -167,7 +167,7 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-              <div onClick={() => joinMeet()} className=" text-white bg-[#1847C0] font-circular py-2 px-5 w-max rounded-full ">
+              <div onClick={() => joinMeet()} className="cursor-pointer text-white bg-[#1847C0] font-circular py-2 px-5 w-max rounded-full ">
                 {countdown}
               </div>
             </div>
@@ -222,7 +222,7 @@ const Dashboard = () => {
                 <div>Notes</div>
                 <div>Report Date</div>
               </div>
-              {data.reportHistory.map((report, index) => (
+              {data.reportHistory.slice(0, 4).map((report, index) => (
                 <div
                   key={index}
                   className={clsx(
