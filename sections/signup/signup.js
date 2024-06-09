@@ -31,7 +31,16 @@ const Signup = () => {
   const passwordRef = useRef(null);
   useEffect(() => {
     if (user) {
-      router.push("/dashboard");
+      console.log(user);
+      if (!user.phone) {
+        router.push("/personaldetails");
+      }
+      else if (!user.alchohol || !user.diet || !user.smoking || !user.exercise || !user.no_of_meals) {
+        router.push("/onboarding");
+      }
+      else {
+        router.push("/dashboard");
+      }
     } else {
       setpageloading(false);
     }
