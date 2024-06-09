@@ -17,6 +17,7 @@ const Footer = () => {
         pathname.includes("signup") ? "hidden" : "",
         pathname.includes("onboarding") ? "hidden" : "",
         pathname.includes("forgotpassword") ? "hidden" : "",
+        pathname.includes("meeting") ? "hidden" : ""
       )}
     >
       <Padding className={" py-20 flex  "}>

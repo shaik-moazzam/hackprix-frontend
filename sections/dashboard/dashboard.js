@@ -9,6 +9,7 @@ import { toast } from "@/components/ui/use-toast";
 import { getToken } from "@/api/getToken";
 import GetDAshData from "@/api/dashboardhit";
 import calculateCountdown from "@/utils/calculateCountdown";
+import joinMeeting from "@/api/joinMeeting";
 
 const Dashboard = () => {
   const [countdown, setCountdown] = useState();
@@ -22,7 +23,7 @@ const Dashboard = () => {
     const token = getToken();
     const getData = async () => {
       const data = await GetDAshData(token);
-      if(data.error){
+      if (data.error) {
         setPoint(true);
       }
       else if (data.lastSlot) {
@@ -118,6 +119,15 @@ const Dashboard = () => {
     return date.toLocaleDateString("en-US", options);
   }
 
+  const joinMeet = async () => {
+    const data2 = await joinMeeting(data.lastSlot.slot.slotId);
+    if (data2.toLowerCase().includes("internal server error")) {
+      toast({ title: "Something went wrong, please try again later" });
+    } else {
+      window.open(`/meeting?token=${data2}`, "_blank");
+    }
+  }
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-[100vh] ">
@@ -151,13 +161,13 @@ const Dashboard = () => {
               <div className=" bg-[#1847C0] font-circular rounded-full flex gap-3 p-3 pr-6 w-max ">
                 <Image className=" w-[3rem] " src={src} />
                 <div>
-                  <div className=" text-white ">Miss Sheena</div>
+                  <div className=" text-white ">{data.lastSlot.slot.doctor.name}</div>
                   <div className=" text-[#8FAAF1] text-[0.9rem] ">
                     Cardiologist
                   </div>
                 </div>
               </div>
-              <div className=" text-white bg-[#1847C0] font-circular py-2 px-5 w-max rounded-full ">
+              <div onClick={() => joinMeet()} className=" text-white bg-[#1847C0] font-circular py-2 px-5 w-max rounded-full ">
                 {countdown}
               </div>
             </div>

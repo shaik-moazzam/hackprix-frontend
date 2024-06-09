@@ -49,6 +49,7 @@ const Navbar = () => {
         params.includes("signup") ? "hidden" : "",
         params.includes("onboarding") ? "hidden" : "",
         params.includes("forgotpassword") ? "hidden" : "",
+        params.includes("meeting") ? "hidden" : ""
       )}
     >
       <Padding className={""}>
