@@ -8,6 +8,7 @@ const Medicaltdetails = () => {
   const params = useSearchParams()
   const id = params.get('id')
   const [data, setdata] = useState()
+  const [pageload, setpageload] = useState(true)
   useEffect(() => {
     const getdata = async () => {
       const d = await getTestById(id)
@@ -47,16 +48,16 @@ const Medicaltdetails = () => {
                 </div>
                 <div>
                   <div className=' text-[#7A7D7F] font-circular text-[0.9rem] font-medium'>Price</div>
-                  <div className=' text-[#2F3133] font-circular text-[1rem] font-medium'> &#x20B9; {data.price}</div>
+                  <div className=' text-[#2F3133] font-circular text-[1rem] font-medium'> &#x20B9; {data?.price}</div>
                 </div>
                 <div>
                   <div className=' text-[#7A7D7F] font-circular text-[0.9rem] font-medium'>Description</div>
-                  <div className=' text-[#2F3133] font-circular text-[1rem] font-medium'>{data.description}</div>
+                  <div className=' text-[#2F3133] font-circular text-[1rem] font-medium'>{data?.description}</div>
                 </div>
               </div>
             </div>
           </Padding>
-          {data.parameters.map((sub) => (
+          {data?.parameters.map((sub) => (
 
 
             <Padding>

@@ -10,15 +10,34 @@ import clsx from "clsx";
 import Link from "next/link";
 import getAllTests from "@/api/getAllTests";
 import { getToken } from "@/api/getToken";
+import Arrowdown from "@/public/icons/arrowdown";
+import testProviders from "@/api/testProviders";
+import { DatePicker } from "@/components/ui/datepicker";
+import bookTests from "@/api/bookTests";
+import { toast, useToast } from "@/components/ui/use-toast";
 
 const Medicaltest = () => {
   const [data, setdata] = useState();
   const [activetab, setactivetab] = useState(0);
+  const [testname, settestname] = useState("Test12355");
   const [loading, setloading] = useState(true);
+  const [labprovider, setlabprovider] = useState()
+  const [selectedlab, setselectedlab] = useState()
+  const [selectedlabid, setselectedlabid] = useState()
+
+  const [starttime, setstarttime] = useState()
+  const [showOptions, setShowOptions] = useState(false);
+  const [showOptions1, setShowOptions1] = useState(false);
+  const [showOptions2, setShowOptions2] = useState(false);
+  const [pop, setpop] = useState(false)
+  const { toast } = useToast()
+  const [dob, setdob] = useState()
   useEffect(() => {
     const getdata = async () => {
       const token = getToken();
       const data = await getAllTests(token);
+      const d = await testProviders()
+      setlabprovider(d)
       console.log(data);
       if (data) {
         setloading(false);
@@ -128,9 +147,191 @@ const Medicaltest = () => {
       </div>
     );
   }
+  const submit = async () => {
+    if (testname && selectedlabid && dob && starttime) {
+
+      const bookTests1 = await bookTests(testname, selectedlabid, dob, starttime)
+    }
+    else {
+      toast({
+        title: "Please fill all the fields",
+
+      })
+    }
+  }
+  const dedlinedate = (dd) => {
+    const date = new Date(dd);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // getMonth() returns month from 0-11
+    const year = date.getFullYear();
+
+    const formatteddate = `${day}/${month}/${year}`;
+    console.log(formatteddate);
+    setdob(formatteddate);
+  };
+  const timearray = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00']
 
   return (
     <div>
+      <div className={clsx(" h-[100vh]  bg-[#00000025] z-[10] flex justify-center items-center w-[100vw] fixed left-0 top-0 ", pop ? " " : " hidden")}>
+        <div
+          className=" bg-white rounded-3xl  w-[400px] p-[1.5rem] ">
+          <div className=" font-circular text-center font-medium text-[1.5rem]  pb-[1rem]">{testname}</div>
+          <div className=" flex flex-col gap-[1rem]">
+            <div className=" flex flex-col gap-2">
+              <div className="  font-circular font-medium tracking-wide text-[0.85rem]">
+                Test provider
+              </div>
+              <div onClick={() => { setShowOptions(!showOptions) }} className=" w-full relative">
+                <div
+                  style={{ ease: [0.43, 0.13, 0.23, 0.96] }}
+                  className={clsx(
+                    showOptions ? "rotate-180" : "rotate-0",
+                    " transition-all absolute top-[50%] -translate-y-[50%]  right-3   duration-500"
+                  )}
+                >
+                  <Arrowdown color={"#292D32"} />
+                </div>
+
+                <input
+
+                  readOnly
+                  value={selectedlab}
+                  className=" outline-none cursor-pointer focus:border-[#205FFF] bg-[#FAFBFC] w-[100%]   px-4 py-3.5 border-[#EDEEF4] border-[1px]  text-[.9rem]   font-circular  rounded-lg"
+                  placeholder="Select Your drinking  habits"
+                  type="text"
+                />
+                <motion.div
+                  initial={{
+                    height: 0,
+                  }}
+                  animate={{
+                    height: showOptions ? "auto" : 0,
+                  }}
+                  transition={{
+                    duration: 0.3,
+                    ease: [0.43, 0.13, 0.23, 0.96],
+                  }}
+                  id=""
+                  className={clsx(
+                    "  overflow-hidden rounded-xl  z-20 absolute w-full  bg-white my-1 "
+                  )}
+                >
+                  <div
+                    id="nested-content1"
+                    className=" border-[1px] grid gap-1 border-[#EDEEF4] rounded-xl overflow-scroll"
+                  >
+                    {labprovider?.map((value) => (
+                      <div
+                        onClick={() => {
+                          if (value.hospital) {
+                            setselectedlab(value.hospital.name)
+                            setselectedlabid(value.hospital._id)
+                          }
+                          else {
+
+                            setselectedlab(value.name);
+                            setselectedlabid(value._id);
+                          }
+                          setShowOptions(false);
+                        }}
+                        className="   hover:cursor-pointer px-3 text-[#000000]  py-3 duration-300  font-circular font-medium tracking-wide w-full h85er:text-[#8f8f8f] hover:bg-[#EDEDED]       h-max   leading-none"
+                      >
+                        {value.hospital ? value.hospital.name : value.name}
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+            <div className=" flex flex-col gap-2">
+              <div className="  font-circular font-medium tracking-wide text-[0.85rem]">
+                Test Time
+              </div>
+              <div onClick={() => { setShowOptions1(!showOptions1) }} className=" w-full relative">
+                <div
+                  style={{ ease: [0.43, 0.13, 0.23, 0.96] }}
+                  className={clsx(
+                    showOptions1 ? "rotate-180" : "rotate-0",
+                    " transition-all absolute top-[50%] -translate-y-[50%]  right-3   duration-500"
+                  )}
+                >
+                  <Arrowdown color={"#292D32"} />
+                </div>
+
+                <input
+
+                  readOnly
+                  value={starttime}
+                  className=" outline-none cursor-pointer focus:border-[#205FFF] bg-[#FAFBFC] w-[100%]   px-4 py-3.5 border-[#EDEEF4] border-[1px]  text-[.9rem]   font-circular  rounded-lg"
+                  placeholder="Select Your drinking  habits"
+                  type="text"
+                />
+                <motion.div
+                  initial={{
+                    height: 0,
+                  }}
+                  animate={{
+                    height: showOptions1 ? "auto" : 0,
+                  }}
+                  transition={{
+                    duration: 0.3,
+                    ease: [0.43, 0.13, 0.23, 0.96],
+                  }}
+                  id=""
+                  className={clsx(
+                    "  overflow-hidden rounded-xl  z-20 absolute w-full  bg-white my-1 "
+                  )}
+                >
+                  <div
+                    id="nested-content1"
+                    className=" border-[1px]  p-[1rem] flex flex-wrap border-[#EDEEF4] rounded-xl overflow-scroll"
+                  >
+                    {timearray?.map((value) => (
+                      <div
+                        onClick={() => {
+                          setstarttime(value);
+                          setShowOptions1(false);
+                        }}
+                        className="   hover:cursor-pointer w-max px-3 text-[#000000]  py-3 duration-300  font-circular font-medium tracking-wide  hover:text-[#8f8f8f] hover:bg-[#EDEDED]       h-max   leading-none"
+                      >
+                        {value}
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+            <div className=" flex flex-col gap-2">
+              <div className="  font-circular font-medium text-[0.85rem]">
+                Date Of Test
+              </div>
+              <div>
+                <DatePicker deadline={dob} dedlinedate={dedlinedate} />
+              </div>
+            </div>
+            <div className=" w-full grid grid-cols-2 gap-[1rem]">
+              <div
+                className=" text-[0.9rem]  text-[#d41212] border-[#d41212] border-[1px] w-full    font-circular cursor-pointer justify-center    font-medium py-4 rounded-full flex gap-3 items-center "
+                onClick={() => { setpop(false) }}
+              >
+                <div >Cancel</div>
+
+              </div>
+              <div
+                className=" text-[0.9rem]  bg-[#52C509] w-full  font-circular cursor-pointer justify-center  text-white   font-medium py-4 rounded-full flex gap-3 items-center min-h-[30px]"
+                onClick={submit}
+              >
+                <div className={clsx("", loading ? "hidden" : "")}>Continue</div>
+                <div className={clsx("", loading ? "" : "hidden")}>
+                  <div class="loader"></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
       <Padding>
         <div className=" bg-[#1D55E5] flex justify-between overflow-hidden mt-6 rounded-3xl ">
           <div className=" p-[3rem]  ">
@@ -214,17 +415,17 @@ const Medicaltest = () => {
                   <div className="w-[20%]">{item.code}</div>
                   <div className="w-[25%]">{item.description}</div>
                   <div className="w-[15%]">{item.price}</div>
-                  <div className="w-[20%]">
-                    <Link href={`/dashboard/medicaltest/details`}>
-                      <Button
-                        text={"Book Now"}
-                        className={
-                          index % 2 !== 0
-                            ? " bg-white border border-[#EAE7E7] "
-                            : "bg-white"
-                        }
-                      />
-                    </Link>
+                  <div onClick={() => { setpop(true); settestname(item.name) }} className="w-[20%]">
+
+                    <Button
+                      text={"Book Now"}
+                      className={
+                        index % 2 !== 0
+                          ? " bg-white border border-[#EAE7E7] "
+                          : "bg-white"
+                      }
+                    />
+
                   </div>
                 </div>
               ))}
