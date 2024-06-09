@@ -5,6 +5,8 @@ import { useUser } from "@/redux/userContext";
 import Arrowleft from "@/public/icons/arrowleft";
 import clsx from "clsx";
 import { useRouter, useSearchParams } from "next/navigation";
+import updatePatient from "@/api/updatePatient";
+import validateOtp from "@/api/validateOtp";
 // import updatestudent from "@/api/updatestudent";
 // import validatestudentotp from "@/api/validatestudentotp";
 
@@ -13,7 +15,8 @@ const Otppop = ({
   handleprocess,
   popupclose,
   otpcountdownw,
-  userclass,
+  gender,
+  dob,
   setdemoteacher,
   sendOtpMessage,
 }) => {
@@ -88,29 +91,26 @@ const Otppop = ({
       }
     }
   };
-  const validateotp = async () => {
+  const validateotp1 = async () => {
     setloading(true);
     const otpString = otpDigits.join("");
     console.log(otpString);
     if (otpString.length === 6) {
-      const otp = await validatestudentotp(phone, otpString, user?.token);
+      const otp = await validateOtp (phone, otpString);
       if (otp.error) {
         toast({
           title: otp.error,
         });
       }
       if (otp.phone) {
-        const token = user?.token;
         const object1 = {
-          standard: userclass,
+          gender: gender,
+          dob: dob
         };
-        const updateuserdetails = await updatestudent(object1, token);
+        const updateuserdetails = await updatePatient(object1);
+        console.log(updateuserdetails, "read");
         dispatch({ type: "SET_USER", payload: updateuserdetails });
-        if (demo == "true") {
-          router.push("/freedemo");
-        } else {
-          router.push("/dashboard");
-        }
+        router.push("/onboarding")
       }
     } else {
       toast({
@@ -183,7 +183,7 @@ const Otppop = ({
         </div>
         <div
           onClick={() => {
-            validateotp();
+            validateotp1();
           }}
           className="text-[0.9rem] bg-[#205FFF] w-full md:w-[90%] cursor-pointer justify-center text-white    font-circular font-medium py-4 rounded-full min-h-[55px] flex gap-3 items-center"
         >

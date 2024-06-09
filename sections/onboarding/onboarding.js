@@ -1,14 +1,33 @@
 "use client"
 import Logo from '@/public/icons/logo';
 import Link from 'next/link';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import People1 from "../../public/images/signup.png";
 import Image from 'next/image';
 import clsx from 'clsx';
 import Arrowdown from '@/public/icons/arrowdown';
 import { motion } from 'framer-motion';
 import { toast, useToast } from '@/components/ui/use-toast';
+import { useUser } from '@/redux/userContext';
+import { useRouter } from 'next/navigation';
+import updateHabits from '@/api/updateHabits';
 const Onboarding = () => {
+    const { state, dispatch } = useUser();
+    const user = state.user;
+    const route = useRouter();
+    const [pageLoad, setPageLoad] = useState(true);
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!user && !token) {
+            route.push("/login")
+        }
+        else if (user && (user.alchohol && user.diet && user.smoking && user.exercise && user.no_of_meals)) {
+            route.push("/dashboard")
+        }
+        else {
+            setPageLoad(false);
+        }
+    }, [user])
     const [showOptions, setShowOptions] = useState(false);
     const [showOptions1, setShowOptions1] = useState(false);
     const [showOptions2, setShowOptions2] = useState(false);
@@ -16,7 +35,6 @@ const Onboarding = () => {
     const [showOptions4, setShowOptions4] = useState(false);
     const { toast } = useToast()
     const [loading, setloading] = useState(false);
-    const [pageLoad, setPageLoad] = useState(false);
     const [drinkingHabits, setDrinkingHabits] = useState();
     const [exercise, setExercise] = useState();
     const [eatingSchedule, setEatingSchedule] = useState();
@@ -35,7 +53,7 @@ const Onboarding = () => {
             </div>
         );
     }
-    const submit = () => {
+    const submit = async () => {
         setloading(true)
         if (!drinkingHabits) {
             toast({
@@ -58,16 +76,25 @@ const Onboarding = () => {
                 title: "Please choose smoking habits"
             });
         } else {
-            console.log({
-                drinkingHabits,
+            const data = await updateHabits(drinkingHabits,
                 exercise,
                 eatingSchedule,
                 dietPreference,
-                smokingHabits
-            });
-            toast({
-                title: "Preferences submitted successfully!"
-            });
+                smokingHabits)
+            console.log(data, "read");
+            if (data.error) {
+                toast({
+                    title: data.error
+                });
+            }
+            else {
+                toast({
+                    title: "Preferences submitted successfully!"
+                });
+                dispatch({ type: "SET_USER", payload: data });
+
+                route.push("/dashboard")
+            }
         }
         setloading(false)
     }

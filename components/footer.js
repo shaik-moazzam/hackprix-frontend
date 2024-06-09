@@ -11,7 +11,8 @@ const Footer = () => {
     <div
       className={clsx(
         " bg-[#163300] text-white font-circular ",
-        pathname.includes("dashboard") ? " hidden " : ""
+        pathname.includes("dashboard") ? " hidden " : "",
+        pathname.includes("personaldetails") ? "hidden" : ""
       )}
     >
       <Padding className={" py-20 flex  "}>
