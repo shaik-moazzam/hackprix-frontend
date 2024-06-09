@@ -89,14 +89,14 @@ const Medicalhistory = () => {
       <div className="h-[100vh] mt-[4rem] flex justify-center text-black font-semibold text-[2rem]">
         No Data To Display
       </div>
-    )
+    );
   }
   return (
     <div className=" py-12 ">
       <Padding className={" flex gap-5 "}>
         <div className=" w-[35%] h-max ">
-          {data?
-            .slice()
+          {data
+            ?.slice()
             .reverse()
             .map((item, index) => (
               <div key={index} className="flex gap-4">
@@ -237,19 +237,20 @@ const Medicalhistory = () => {
               </div>
             </div>
           </div>
-          {criticaldetails?.docs?.length > 0 && <div className=" w-full my-10 bg-[#FFFFFF] p-[1.5rem] rounded-3xl border-[1px] border-[#E4E4E4]">
-            <div className=" font-circular font-medium text-[1.25rem] pb-[1rem]">
-              Attachments & Reports
+          {criticaldetails?.docs?.length > 0 && (
+            <div className=" w-full my-10 bg-[#FFFFFF] p-[1.5rem] rounded-3xl border-[1px] border-[#E4E4E4]">
+              <div className=" font-circular font-medium text-[1.25rem] pb-[1rem]">
+                Attachments & Reports
+              </div>
+              <div className=" flex gap-4 ">
+                {criticaldetails?.docs?.map((data) => (
+                  <Link target="blank" href={IMGBASE_URL + data?.url}>
+                    <Image className=" w-[45px] h-[50px] " src={src} />
+                  </Link>
+                ))}
+              </div>
             </div>
-            <div className=" flex gap-4 ">
-              {criticaldetails?.docs?.map((data) => (
-                <Link target="blank" href={IMGBASE_URL + data?.url}>
-                  <Image className=" w-[45px] h-[50px] " src={src} />
-                </Link>
-              ))}
-            </div>
-          </div>}
-
+          )}
         </div>
       </Padding>
     </div>
