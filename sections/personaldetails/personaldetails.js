@@ -107,6 +107,9 @@ const Personaldetails = () => {
         setdob(formatteddate);
     };
     const submit = async () => {
+        if (loading) {
+            return
+        }
         const validationResult = validatephone(phone);
         if (validationResult !== true) {
             toast({
@@ -124,19 +127,23 @@ const Personaldetails = () => {
             })
         }
         else {
+            setloading(true);
             const data = await sendOtp(phone?.phoneNumber);
-            console.log(data, "read")
+
             if (!data.error) {
-                if(data.message.includes("Duplicate -- Phone number")){
-                    toast({ title: "Duplicate Number, number already exists"})
+                if (data?.message?.includes("Duplicate -- Phone number")) {
+                    toast({ title: "Duplicate Number, number already exists" })
                 }
-                else{
+                else {
                     setpopup(true)
+                    toast({ title: "Otp sent Successfully" });
+
                 }
             }
             else {
                 toast({ title: data.error })
             }
+            setloading(false);
         }
     }
     const popupclose = () => {
@@ -157,11 +164,11 @@ const Personaldetails = () => {
             }
         }
         setpopup(true);
-
+        toast({
+            title: "otp sent succesfully",
+        });
         {
-            toast({
-                title: "otp sent succesfully",
-            });
+
             setloading(false);
         }
     };

@@ -139,21 +139,24 @@ const Dashboardnavbar = () => {
               ></motion.div>
             )}
           </div>
-          <div
-            onClick={() => setactive(6)}
-            className={clsx(
-              " pb-2 translate-y-[1px] cursor-pointer duration-300 relative ",
-              isactive == 6 ? "text-[#62C509]   " : "text-[#60636C] "
-            )}
-          >
-            Crowdfunding
-            {isactive == 6 && (
-              <motion.div
-                layoutId="tabs"
-                className=" absolute h-[1px] w-full bottom-0 bg-[#52C509] "
-              ></motion.div>
-            )}
-          </div>
+          <Link href={"/dashboard/crowdfunding"}>
+
+            <div
+              onClick={() => setactive(6)}
+              className={clsx(
+                " pb-2 translate-y-[1px] cursor-pointer duration-300 relative ",
+                isactive == 6 ? "text-[#62C509]   " : "text-[#60636C] "
+              )}
+            >
+              Crowdfunding
+              {isactive == 6 && (
+                <motion.div
+                  layoutId="tabs"
+                  className=" absolute h-[1px] w-full bottom-0 bg-[#52C509] "
+                ></motion.div>
+              )}
+            </div>
+          </Link>
         </div>
       </div>
     </div>

@@ -22,8 +22,16 @@ const Crowdfundingcard = () => {
                 </div>
 
             </div>
-            <div className='text-[#60646A] font-circular text-[0.9rem] w-[800px]'>
-                Meeting with staff for the planning of upcoming sports events and also planning about the management, performance review.Meeting with staff for the planning of upcoming sports events and also planning about the management, performance review.Meeting with staff for the planning of.
+            <div className=' flex justify-between items-end'>
+
+                <div className='text-[#60646A] font-circular text-[0.9rem] w-[800px]'>
+                    Meeting with staff for the planning of upcoming sports events and also planning about the management, performance review.Meeting with staff for the planning of upcoming sports events and also planning about the management, performance review.Meeting with staff for the planning of.
+                </div>
+                <div className=' font-medium  text-[0.8ren] font-circular'>
+
+                    <span className=' text-[#60646A]'>Ends in </span>
+                    <span className=' text-[#2C2E30]'> 02: 05:23</span>
+                </div>
             </div>
 
         </div>

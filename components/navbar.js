@@ -38,12 +38,17 @@ const Navbar = () => {
         params.includes("usecase1")
           ? " bg-[#1D55E5]"
           : params.includes("usecase2")
-          ? "bg-[#EDF1F4]"
-          : params.includes("usecase3")
-          ? " bg-[#163300]"
-          : params.includes("dashboard")
-          ? " hidden "
-          : ""
+            ? "bg-[#EDF1F4]"
+            : params.includes("usecase3")
+              ? " bg-[#163300]"
+              : params.includes("dashboard")
+                ? " hidden "
+                : "", params.includes("dashboard") ? " hidden " : "",
+        params.includes("personaldetails") ? "hidden" : "",
+        params.includes("login") ? "hidden" : "",
+        params.includes("signup") ? "hidden" : "",
+        params.includes("onboarding") ? "hidden" : "",
+        params.includes("forgotpassword") ? "hidden" : "",
       )}
     >
       <Padding className={""}>
@@ -54,8 +59,8 @@ const Navbar = () => {
                 params.includes("usecase1")
                   ? "#fff"
                   : params.includes("usecase3")
-                  ? " #fff"
-                  : "#000000"
+                    ? " #fff"
+                    : "#000000"
               }
             />
             <div
@@ -64,10 +69,10 @@ const Navbar = () => {
                 params.includes("usecase1")
                   ? " text-[#95AEEF]"
                   : params.includes("usecase2")
-                  ? "text-[#858A98]"
-                  : params.includes("usecase3")
-                  ? "text-[#C0D1B3]"
-                  : "text-[#454745]"
+                    ? "text-[#858A98]"
+                    : params.includes("usecase3")
+                      ? "text-[#C0D1B3]"
+                      : "text-[#454745]"
               )}
             >
               {/* <div
@@ -124,10 +129,10 @@ const Navbar = () => {
                   params.includes("usecase1")
                     ? " text-[#95AEEF]"
                     : params.includes("usecase2")
-                    ? "text-[#858A98]"
-                    : params.includes("usecase3")
-                    ? "text-[#C0D1B3]"
-                    : "text-[#454745]"
+                      ? "text-[#858A98]"
+                      : params.includes("usecase3")
+                        ? "text-[#C0D1B3]"
+                        : "text-[#454745]"
                 )}
               >
                 Login
@@ -141,10 +146,10 @@ const Navbar = () => {
                   params.includes("usecase1")
                     ? " bg-[#fff]"
                     : params.includes("usecase2")
-                    ? " bg-[#fff]"
-                    : params.includes("usecase3")
-                    ? " bg-[#fff]"
-                    : "bg-[#9FE870]"
+                      ? " bg-[#fff]"
+                      : params.includes("usecase3")
+                        ? " bg-[#fff]"
+                        : "bg-[#9FE870]"
                 )}
               />
             </div>

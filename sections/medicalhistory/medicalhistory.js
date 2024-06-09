@@ -167,14 +167,15 @@ const Medicalhistory = () => {
                   {criticaldetails.Remark}
                 </div>
               </div>
-              <div>
+              {criticaldetails.hospital && <div>
                 <div className=" text-[#7A7D7F] font-circular text-[0.9rem] font-medium">
                   Hospital
                 </div>
                 <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
                   {criticaldetails.hospital}
                 </div>
-              </div>
+              </div>}
+
               <div>
                 <div className=" text-[#7A7D7F] font-circular text-[0.9rem] font-medium">
                   Issue
@@ -224,7 +225,7 @@ const Medicalhistory = () => {
               </div>
             </div>
           </div>
-          <div className=" w-full my-10 bg-[#FFFFFF] p-[1.5rem] rounded-3xl border-[1px] border-[#E4E4E4]">
+          {criticaldetails.docs.length > 0 && <div className=" w-full my-10 bg-[#FFFFFF] p-[1.5rem] rounded-3xl border-[1px] border-[#E4E4E4]">
             <div className=" font-circular font-medium text-[1.25rem] pb-[1rem]">
               Attachments & Reports
             </div>
@@ -235,7 +236,8 @@ const Medicalhistory = () => {
                 </Link>
               ))}
             </div>
-          </div>
+          </div>}
+
         </div>
       </Padding>
     </div>

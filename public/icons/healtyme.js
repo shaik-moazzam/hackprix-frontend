@@ -3,8 +3,8 @@ import React from "react";
 const Healtyme = () => {
   return (
     <svg
-      width="1281"
-      height="151"
+
+
       viewBox="0 0 1281 151"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

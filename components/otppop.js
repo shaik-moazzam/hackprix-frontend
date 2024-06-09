@@ -96,7 +96,7 @@ const Otppop = ({
     const otpString = otpDigits.join("");
     console.log(otpString);
     if (otpString.length === 6) {
-      const otp = await validateOtp (phone, otpString);
+      const otp = await validateOtp(phone, otpString);
       if (otp.error) {
         toast({
           title: otp.error,
@@ -189,7 +189,7 @@ const Otppop = ({
         >
           <div className={clsx("", loading ? "hidden" : "")}>Continue</div>
           <div className={clsx("", loading ? "" : "hidden")}>
-            <div className=" loader1   " />
+            <div className=" loader   " />
 
           </div>
         </div>

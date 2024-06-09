@@ -12,7 +12,11 @@ const Footer = () => {
       className={clsx(
         " bg-[#163300] text-white font-circular ",
         pathname.includes("dashboard") ? " hidden " : "",
-        pathname.includes("personaldetails") ? "hidden" : ""
+        pathname.includes("personaldetails") ? "hidden" : "",
+        pathname.includes("login") ? "hidden" : "",
+        pathname.includes("signup") ? "hidden" : "",
+        pathname.includes("onboarding") ? "hidden" : "",
+        pathname.includes("forgotpassword") ? "hidden" : "",
       )}
     >
       <Padding className={" py-20 flex  "}>
@@ -55,7 +59,7 @@ const Footer = () => {
           </div>
         </div>
       </Padding>
-      <div className=" mx-auto w-max ">
+      <div className=" mx-auto w-[90vw] ">
         <Healtyme />
       </div>
     </div>

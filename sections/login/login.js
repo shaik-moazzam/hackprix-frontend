@@ -5,6 +5,7 @@ import Padding from "@/components/padding";
 import Link from "next/link";
 import { BACK_KEY, BASE_URL } from "@/api/variables";
 import { useToast } from "@/components/ui/use-toast";
+import People1 from "../../public/images/signup.png";
 
 import clsx from "clsx";
 import Eye from "@/public/icons/eye";
@@ -15,6 +16,7 @@ import Register from "@/api/register";
 import { useUser } from "@/redux/userContext";
 import { useRouter, useSearchParams } from "next/navigation";
 import login1 from "@/api/login";
+import Logo from "@/public/icons/logo";
 
 const Login = () => {
   const { dispatch, state } = useUser();
@@ -40,7 +42,7 @@ const Login = () => {
         console.log(user);
         if (!user.phone) {
           router.push("/personaldetails");
-        } 
+        }
         else if (!user.alchohol || !user.diet || !user.smoking || !user.exercise || !user.no_of_meals) {
           router.push("/onboarding");
         }
@@ -178,26 +180,27 @@ const Login = () => {
     );
   }
   return (
-    <div className=" grid grid-cols-1 justify-center lg:grid-cols-2  relative  min-h-[100vh] md:max-h-[100vh]  gap-[3rem] overflow-hidden">
+    <div className=" grid grid-cols-1 justify-center lg:grid-cols-5  relative  min-h-[100vh] md:max-h-[100vh]  gap-[3rem] overflow-hidden">
       <div className=" absolute hidden lg:flex left-[1rem] md:left-[2rem] lg:left-[2rem] top-[2rem]  z-20">
         <Link href={"/"}>
           {/* <Zainii /> */}
-          HOME
+          <Logo />
         </Link>
       </div>
-      <div className=" h-full hidden lg:block  w-full">
-        {/* <Image className=" h-full  w-full" src={Sign} /> */}
+      <div className=" h-full hidden lg:block col-span-2  w-full">
+        <Image
+          className=" h-full w-[70%] object-contain mx-auto "
+          src={People1}
+        />
       </div>
-      <div className=" h-full flex justify-center lg:block  bg-[#f9fafb] lg:bg-white  items-center">
+      <div className=" h-full flex  lg:block  col-span-3 bg-[#f9fafb] lg:bg-white w-full justify-center  items-center">
         <div
           className={
-            "py-10  px-[1rem] md:px-[2rem] lg:px-0 w-[450px]  md:w-max  lg:flex  items-center  lg:w-full"
+            "py-10  px-[1rem] md:px-[2rem] lg:px-0  justify-center   w-full  lg:flex  h-full   items-center   lg:w-full"
           }
         >
           <div className=" w-full   relative md:max-w-[450px] bg-white border-[1px] lg:border-[0px]  border-[#dadcdd]  rounded-3xl px-[1rem] md:px-[2rem]  md:min-w-[450px] z-10">
-            <div className="  pt-[3rem] lg:pt-0 pb-[2rem] md:pb-[5rem] text-[#252525]  font-Avant font-[700] up fontstyle text-center lg:text-start text-[2rem] ">
-              log in
-            </div>
+
             <Link href={`${BASE_URL}student/auth/google`}>
               <div className=" bg-white w-full justify-center border-[1px]  font-Matter font-[500] border-[#E5E7EB] py-4  rounded-[10rem] flex gap-3 items-center ">
                 <Google g={true} /> Log In with google
@@ -265,7 +268,7 @@ const Login = () => {
             >
               <div className={clsx("", loading ? "hidden" : "")}>Sign up</div>
               <div className={clsx("", loading ? "" : "hidden")}>
-                <div class="loader-line"></div>
+                <div class="loader"></div>
               </div>
             </div>
             <div className=" text-[0.9rem] text-[#858585] font-Matter flex py-6  pb-[3rem] lg:pb-10 justify-center gap-2">
