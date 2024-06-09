@@ -31,29 +31,92 @@ const Medicaltest = () => {
   const testData = [
     {
       id: 1,
-      name: "Diabetes Test",
-      duration: "1-2 days",
-      code: "DIA03652",
-      description: "impaired glucose tolerance",
-      price: "Rs: 1,299",
+      name: "Blood Test",
+      duration: "1 day",
+      code: "BLD01234",
+      description: "Complete blood count",
+      price: "Rs: 499",
       imageSrc: src1,
     },
     {
       id: 2,
-      name: "Diabetes Test",
-      duration: "1-2 days",
-      code: "DIA03652",
-      description: "impaired glucose tolerance",
-      price: "Rs: 1,299",
+      name: "Thyroid Test",
+      duration: "2-3 days",
+      code: "THY05678",
+      description: "Thyroid function test",
+      price: "Rs: 899",
       imageSrc: src1,
     },
     {
       id: 3,
-      name: "Diabetes Test",
+      name: "Liver Function Test",
       duration: "1-2 days",
-      code: "DIA03652",
-      description: "impaired glucose tolerance",
+      code: "LFT09123",
+      description: "Assess liver health",
+      price: "Rs: 1,099",
+      imageSrc: src1,
+    },
+    {
+      id: 4,
+      name: "Kidney Function Test",
+      duration: "2-3 days",
+      code: "KFT04567",
+      description: "Evaluate kidney function",
+      price: "Rs: 1,199",
+      imageSrc: src1,
+    },
+    {
+      id: 5,
+      name: "Lipid Profile Test",
+      duration: "1 day",
+      code: "LIP07890",
+      description: "Cholesterol and triglycerides",
+      price: "Rs: 799",
+      imageSrc: src1,
+    },
+    {
+      id: 6,
+      name: "Vitamin D Test",
+      duration: "1-2 days",
+      code: "VIT02345",
+      description: "Check vitamin D levels",
+      price: "Rs: 1,499",
+      imageSrc: src1,
+    },
+    {
+      id: 7,
+      name: "Complete Health Checkup",
+      duration: "3-4 days",
+      code: "CHC01112",
+      description: "Comprehensive health assessment",
+      price: "Rs: 4,999",
+      imageSrc: src1,
+    },
+    {
+      id: 8,
+      name: "Glucose Test",
+      duration: "1 day",
+      code: "GLU05678",
+      description: "Blood sugar levels",
+      price: "Rs: 299",
+      imageSrc: src1,
+    },
+    {
+      id: 9,
+      name: "HIV Test",
+      duration: "2-3 days",
+      code: "HIV03456",
+      description: "HIV screening",
       price: "Rs: 1,299",
+      imageSrc: src1,
+    },
+    {
+      id: 10,
+      name: "COVID-19 Test",
+      duration: "1-2 days",
+      code: "COV01923",
+      description: "SARS-CoV-2 detection",
+      price: "Rs: 999",
       imageSrc: src1,
     },
   ];
@@ -135,7 +198,7 @@ const Medicaltest = () => {
                 <div className=" w-[15%] ">Price</div>
                 <div className=" w-[20%] "></div>
               </div>
-              {data.map((item, index) => (
+              {testData.map((item, index) => (
                 <div
                   key={item.id}
                   className={`px-3 py-3 flex items-center gap-2 border-b border-[#F7F7F7] ${
@@ -146,13 +209,13 @@ const Medicaltest = () => {
                   <div className="w-[20%] flex gap-2.5">
                     <Image src={src1} alt={item.title} className="w-[45px]" />
                     <div>
-                      <div>{item.title}</div>
+                      <div>{item.name}</div>
                       <div className="text-[#9F9D9D]">1-2 days</div>
                     </div>
                   </div>
-                  <div className="w-[15%]">{item.testId}</div>
-                  <div className="w-[25%]">{item.biologicalname}</div>
-                  <div className="w-[15%]">Rs:{item.price}</div>
+                  <div className="w-[15%]">{item.code}</div>
+                  <div className="w-[25%]">{item.description}</div>
+                  <div className="w-[15%]">{item.price}</div>
                   <div className="w-[20%]">
                     <Link href={`/dashboard/medicaltest/details`}>
                       <Button
@@ -199,7 +262,7 @@ const Medicaltest = () => {
                   <div className="w-[20%]">
                     <Link href={`/dashboard/medicaltest/details`}>
                       <Button
-                        text={"View"}
+                        text={"View Result"}
                         className={
                           index % 2 !== 0
                             ? " bg-white border border-[#EAE7E7] "

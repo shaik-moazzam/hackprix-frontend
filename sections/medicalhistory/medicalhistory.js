@@ -195,7 +195,7 @@ const Medicalhistory = () => {
                   Smoking
                 </div>
                 <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
-                  Heavy smoker
+                  {user.smoking}
                 </div>
               </div>
               <div>
@@ -203,7 +203,7 @@ const Medicalhistory = () => {
                   Drinking
                 </div>
                 <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
-                  Casual Drink
+                  {user.alchohol}
                 </div>
               </div>
               <div>
@@ -211,7 +211,7 @@ const Medicalhistory = () => {
                   Physical
                 </div>
                 <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
-                  No exercises & Inactive
+                  {user.exercise}
                 </div>
               </div>
               <div>
@@ -219,7 +219,7 @@ const Medicalhistory = () => {
                   Diet preference
                 </div>
                 <div className=" text-[#2F3133] font-circular text-[1rem] font-medium">
-                  Non-veg
+                  {user.diet}
                 </div>
               </div>
             </div>
