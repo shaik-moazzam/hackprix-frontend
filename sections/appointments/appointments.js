@@ -160,7 +160,7 @@ const Appointments = () => {
                       <div className="w-[20%] items-center     flex justify-center">
                         {item.date}
                       </div>
-                      <div className="w-[20%] flex justify-center">Offline</div>
+                      <div className="w-[20%] flex justify-center">Online</div>
                     </div>
                   ))}
                 </div>

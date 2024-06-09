@@ -1,14 +1,23 @@
 "use client"
 import Padding from '@/components/padding'
 import React, { useEffect, useRef, useState } from 'react'
-import moment from 'moment';
 import clsx from 'clsx';
 import Button from '@/components/button';
+import getDoctorSchedule from '@/api/getDoctorSchedule';
+import { useSearchParams } from 'next/navigation';
+import bookSlot from '@/api/bookSlot';
+import { toast } from '@/components/ui/use-toast';
+import { useUser } from '@/redux/userContext';
 
 const Doctorschedule = () => {
+    const {state} = useUser();
+    const user = state.user;
+    const param = useSearchParams();
+    const id = param.get("id")
     const scrollContainerRef = useRef();
     const picRef = useRef(null);
     const map = [];
+    const [pageLoad, setPageLoad] = useState(true);
 
     const handleScroll = () => {
         if (!scrollContainerRef.current || !picRef.current) {
@@ -25,96 +34,7 @@ const Doctorschedule = () => {
     const [hoursArray, sethoursArray] = useState();
     const [daysArray, setdaysArray] = useState();
     const [data1, setdata1] = useState();
-    const data = {
-        "schedule": [
-            {
-                "time_slot": {
-                    "start_time": "00:00",
-                    "end_time": "01:00"
-                },
-                "day": "Monday",
-                "slots": [
-                    {
-                        "start_time": "00:00",
-                        "freeTrial": false,
-                        "_id": "66649721128e17afe0a3062a"
-                    }
-                ],
-                "_id": "666495671fcd0b77210bbc4e"
-            },
-            {
-                "time_slot": {
-                    "start_time": "00:00",
-                    "end_time": "01:00"
-                },
-                "day": "Tuesday",
-                "slots": [
-                    {
-                        "start_time": "00:00",
-                        "freeTrial": false,
-                        "_id": "66649721128e17afe0a3062c"
-                    }
-                ],
-                "_id": "666495671fcd0b77210bbc58"
-            },
-            {
-                "time_slot": {
-                    "start_time": "00:00",
-                    "end_time": "01:00"
-                },
-                "day": "Wednesday",
-                "slots": [
-                    {
-                        "start_time": "00:00",
-                        "freeTrial": false,
-                        "_id": "66649722128e17afe0a3062e"
-                    }
-                ],
-                "_id": "666495671fcd0b77210bbc62"
-            },
-            {
-                "time_slot": {
-                    "start_time": "00:00",
-                    "end_time": "01:00"
-                },
-                "day": "Thursday",
-                "slots": [
-                    {
-                        "start_time": "00:00",
-                        "freeTrial": false,
-                        "_id": "66649722128e17afe0a30630"
-                    }
-                ],
-                "_id": "666495671fcd0b77210bbc6b"
-            },
-            {
-                "time_slot": {
-                    "start_time": "00:00",
-                    "end_time": "01:00"
-                },
-                "day": "Friday",
-                "slots": [
-                    {
-                        "start_time": "00:00",
-                        "freeTrial": false,
-                        "_id": "66649722128e17afe0a30632"
-                    }
-                ],
-                "_id": "666495671fcd0b77210bbc70"
-            }
-        ],
-        "busySlots": [
-            {
-                "slot": {
-                    "start_time": "00:00",
-                    "patient": "666431e01c466a5c3cba2c2f",
-                    "slotId": "66649721128e17afe0a3062c"
-                },
-                "date": "2024-11-06",
-                "_id": "6664b37276647e2067bfab96"
-            }
-        ]
-    }
+    
     function getDayFromDate(dateString) {
         // Split the date string into year, day, and month components
         const [year, day, month] = dateString.split('-');
@@ -235,9 +155,9 @@ const Doctorschedule = () => {
 
     useEffect(() => {
         const dt = async () => {
-            // setpageload(true);
+            setPageLoad(true);
             try {
-                const da = data
+                const da = await getDoctorSchedule(id);
                 const { monthSchedule, allDates } = generateMonthSchedule(da.schedule, da.busySlots);
                 console.log(monthSchedule, allDates)
                 setdata1(monthSchedule);
@@ -270,7 +190,8 @@ const Doctorschedule = () => {
             }
         };
         dt();
-    }, []);
+        setPageLoad(false);
+    }, [id]);
 
 
 
@@ -299,13 +220,6 @@ const Doctorschedule = () => {
         return emptyCombinations;
     };
 
-    useEffect(() => {
-        const { monthSchedule, allDates } = generateMonthSchedule(data.schedule, data.busySlots);
-        // console.log(monthSchedule);
-        // console.log(allDates);
-        console.log(data1)
-        console.log(hoursArray)
-    }, [])
     const getcolstart = (data) => {
         const col = daysArray.indexOf(data.date) + 1;
         const h = hoursArray;
@@ -320,6 +234,26 @@ const Doctorschedule = () => {
         return hoursArray?.indexOf(time) + 1;
     };
 
+    const slotBooked = async(scheduleData) => {
+        const data = await bookSlot( scheduleData.slotId, scheduleData.date);
+        console.log(data, "read");
+        if(data.error){
+            toast({ title: "Something went wrong "});
+        }
+        else{
+            toast({ title: "Slot have been booked "});
+            window.location.reload();
+        }
+    }
+
+
+    if (pageLoad) {
+        return (
+            <div className='min-h-[100vh] bg-white flex justify-center items-center'>
+                <div className='loader-line' />
+            </div>
+        )
+    }
 
     return (
 
@@ -349,7 +283,7 @@ const Doctorschedule = () => {
                                     {daysArray?.map((day, index) => (
                                         <div
                                             className={clsx(
-                                                " text-[#777778] w-[150px] font-Matter font-circular  border-x-[0.25px]  border-[#e8e8e8]    flex items-center  justify-center font-medium"
+                                                " text-[#777778] w-[200px] font-Matter font-circular  border-x-[0.25px]  border-[#e8e8e8]    flex items-center  justify-center font-medium"
                                             )}
                                         >
                                             <div
@@ -429,13 +363,13 @@ const Doctorschedule = () => {
                                                     ), // Setting row-start dynamically based on start time
                                                 }}
                                                 className={clsx(
-                                                    "h-[150px] w-[150px]   relative  border-[0.25px]  border-[#e8e8e8] "
+                                                    "h-[150px] w-[200px]   relative  border-[0.25px]  border-[#e8e8e8] "
                                                 )}
                                             >
-                                                <div className={clsx(' w-[100%] h-[100%] ', scheduleData.busy ? "bg-[#F6F6F6]" : "hidden")}>
+                                                <div className={clsx(' w-[100%] h-[100%] ', scheduleData.busy ? scheduleData.patient.toString() == user._id.toString() ? "bg-[#a7a5a5]" : "bg-[#F6F6F6]" : "hidden")}>
 
                                                 </div>
-                                                <div className={clsx(' w-[100%] h-[100%] flex justify-center items-center ', !scheduleData.busy ? "" : "hidden")}>
+                                                <div onClick={() => slotBooked(scheduleData)} className={clsx(' w-[100%] h-[100%] flex justify-center items-center ', !scheduleData.busy ? "" : "hidden")}>
                                                     <Button text={"Book now"} className={" border-[1px] border-[#000]"} />
                                                 </div>
 

@@ -1,7 +1,8 @@
 import React from 'react'
 import Button from './button';
+import Link from 'next/link';
 
-const Doctorcard = ({ name, qualification, feild, subject, desc }) => {
+const Doctorcard = ({ name, qualification, feild, subject, desc, id }) => {
     return (
         <div className=" border-[1px] border-[#E2E4E8] bg-[#FAFAFC] w-full px-[1.5rem] py-[1.5rem]  rounded-2xl   ">
             <div className=" flex items-center gap-4">
@@ -31,7 +32,7 @@ const Doctorcard = ({ name, qualification, feild, subject, desc }) => {
                 {desc}
             </div>
             <div>
-                <Button className={" bg-white  border-[#E2E4E9] border-[1px]"} wfull={"  w-full"} text={"Check Availability"} />
+                <Link href={`/dashboard/appointments/doctorschedule?id=${id}`}><Button className={" bg-white  border-[#E2E4E9] border-[1px]"} wfull={"  w-full"} text={"Check Availability"} /></Link>
             </div>
         </div>
     );

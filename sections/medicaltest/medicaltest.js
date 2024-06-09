@@ -214,7 +214,18 @@ const Medicaltest = () => {
                   <div className="w-[20%]">{item.code}</div>
                   <div className="w-[25%]">{item.description}</div>
                   <div className="w-[15%]">{item.price}</div>
-
+                  <div className="w-[20%]">
+                    <Link href={`/dashboard/medicaltest/details`}>
+                      <Button
+                        text={"Book Now"}
+                        className={
+                          index % 2 !== 0
+                            ? " bg-white border border-[#EAE7E7] "
+                            : "bg-white"
+                        }
+                      />
+                    </Link>
+                  </div>
                 </div>
               ))}
             </div>
